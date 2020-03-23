@@ -59,6 +59,7 @@ public class PlayerController: MonoBehaviour
     {
         _extraJump = data._extraJump;
         _speed = data._speed;
+        _jumpForce = data._jumpForce;
 
         isAttack    += SInput.InputAttack;
         isFly       += SInput.InputJump;
@@ -147,9 +148,9 @@ public class PlayerController: MonoBehaviour
             }
         }
         #endregion
-
+        
         #region Attack
-        if (isAttack != null)
+        if (isAttack != null) //костыль на фикс проверки
         {
             if (isAttack?.Invoke() == 1)
             {

@@ -7,7 +7,7 @@ public class ControlSystem : MonoBehaviour
     private readonly string PrefabPlayerPath = "Models/Prefabs/Character/Player";
 
     #region DataGame
-    private PlayerData _playerData = new PlayerData(100, 10, 5, 1, 1000); // +A+
+    private PlayerData _playerData = new PlayerData(100, 10, 5, 1, 25); // +A+
     #endregion
 
     #region Deligate
