@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Asset.Scripts.Qbik.Static.Calculate;
 
 public class ControlSystem : MonoBehaviour
 {
     private readonly string PrefabPlayerPath = "Models/Prefabs/Character/Player";
-
-    #region DataGame
-    private PlayerData _playerData = new PlayerData(100, 10, 5, 1, 25); // +A+
+    
+    #region DataGame  - Локальные данные после обсчета
+    private PlayerData _playerData = Calculate.CalculatePlayer();
     #endregion
 
     #region Deligate
