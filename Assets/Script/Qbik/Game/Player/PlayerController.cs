@@ -24,7 +24,7 @@ public class PlayerController: MonoBehaviour
     public delegate void Flip(Rigidbody2D rb, Transform spritTransform);
     public static event Flip goFlip;
     #endregion
-    
+
     [Header("Спрайт для поворота")]
     [SerializeField] private Transform _enemyGFX;
     [Header("Объект чека земли")]

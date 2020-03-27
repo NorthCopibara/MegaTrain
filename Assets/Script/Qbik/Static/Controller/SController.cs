@@ -31,7 +31,7 @@ namespace Asset.Scripts.Qbik.Static.Controller
                 enemyGFX.localScale = new Vector3(-1f, 1f, 1f);
         }
         #endregion
-        
+
         #region Jump
         public static void Jump(int extraJump, float jumpForce, Rigidbody2D rb)
         {
