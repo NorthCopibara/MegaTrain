@@ -6,13 +6,11 @@ using Asset.Scripts.Qbik.Statick.Log;
 
 public class AttackCollision: MonoBehaviour
 {
-    [SerializeField] private string TagAttack; //Прописывается цель атаки
-    [SerializeField] private GameObject _characterObj; //Грубая зацепка за родительский объект, сделал так что бы не создавалась путаница, что к кому относится 
-    ICanAttack iAttack; //Интерфейс атаки родительского класса
+    private AttackData _attackData;
 
-    private void Awake()
+    public void Initialized(AttackData _attackData) 
     {
-        iAttack = _characterObj.GetComponent<ICanAttack>();
+        this._attackData = _attackData;
     }
 
     private void OnEnable()
@@ -23,17 +21,37 @@ public class AttackCollision: MonoBehaviour
     IEnumerator AttackCollider()
     {
         yield return new WaitForSeconds(0.3f); //Время пока фиксировано, тут надо задавать длительность существования коллайдера
-        this.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision) //Событие коллизии
     {
-        /*if (collision.gameObject.tag == TagAttack) //Если таг объекта нам подходит
-            iAttack.Attack(collision.gameObject.GetComponent<Character>()); //Передает чарактер в метода атаки родительского чарактера*/
+        if (collision.gameObject.tag == _attackData._targetAttack) //Если таг объекта нам подходит
+            collision.gameObject.GetComponent<ITakeDamage>().TakeDamage(_attackData); //Передает чарактер в метода атаки родительского чарактера
     }
 
     private void OnDisable()
     {
         StopAllCoroutines(); //Стопим корутин при выключении объекта
+    }
+}
+
+public enum TypeAttack 
+{
+    Fiz,
+    Mag
+}
+
+public struct AttackData
+{
+    public int _damage;
+    public string _targetAttack;
+    public TypeAttack _type;
+
+    public AttackData(int _damage, string _targetAttack, TypeAttack _type) 
+    {
+        this._damage = _damage;
+        this._targetAttack = _targetAttack;
+        this._type = _type;
     }
 }

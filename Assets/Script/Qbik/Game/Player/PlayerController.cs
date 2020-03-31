@@ -3,7 +3,7 @@ using Asset.Scripts.Qbik.Static.Controller;
 using Asset.Scripts.Qbik.Static.Anim;
 using System.Collections.Generic;
 
-public class PlayerController: MonoBehaviour
+public class PlayerController: MonoBehaviour, ICam
 {
     #region Deligate
     public delegate bool JumpInput();
@@ -27,8 +27,10 @@ public class PlayerController: MonoBehaviour
 
     [Header("Спрайт для поворота")]
     [SerializeField] private Transform _enemyGFX;
-    [Header("Объект чека земли")]
+    [Header("Коллайдеры атаки")]
     [SerializeField] private List<GameObject> _colliderAttack;
+
+    [SerializeField] private List<GameObject> _cam;
 
     [Space (5)]
     [Header("Объект чека земли")]
@@ -64,6 +66,11 @@ public class PlayerController: MonoBehaviour
         isAttack    += SInput.InputAttack;
         isFly       += SInput.InputJump;
         checInput   += SInput.InputControll;
+
+        #region InitAttack
+        AttackData _attackData = new AttackData(data._damage, "Enemy", TypeAttack.Fiz);
+        _colliderAttack[0].GetComponent<AttackCollision>().Initialized(_attackData);
+        #endregion
 
         //Подписка на апдейт
         ControlSystem.fixedUpdate += FixedUpdateController;
@@ -192,5 +199,11 @@ public class PlayerController: MonoBehaviour
     private void SetLastState()
     {
         _lastState = StateMachine._state;
+    }
+
+    public void SwapCam(int i, int j) 
+    {
+        _cam[i].SetActive(false);
+        _cam[j].SetActive(true);
     }
 }

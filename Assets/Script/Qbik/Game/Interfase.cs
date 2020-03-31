@@ -3,7 +3,12 @@
     void Attack();
 }
 
-public interface IAgressiv
+public interface ITakeDamage 
 {
-    void Agressiv();
+    void TakeDamage(AttackData attack);
+}
+
+public interface ICam 
+{
+    void SwapCam(int i, int j);
 }
