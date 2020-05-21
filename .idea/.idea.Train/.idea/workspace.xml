@@ -21,8 +21,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Assets/Script/Swiat/MenuManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Script/Swiat/PauseManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/Swiat/PlayCanvasAnimations.cs" />
+        <option value="$PROJECT_DIR$/Assets/Script/Swiat/PauseManager.cs" />
       </list>
     </option>
   </component>
@@ -65,6 +65,7 @@
       <updated>1588864617742</updated>
       <workItem from="1588864623945" duration="7137000" />
       <workItem from="1589039010575" duration="1942000" />
+      <workItem from="1590075273031" duration="273000" />
     </task>
     <servers />
   </component>

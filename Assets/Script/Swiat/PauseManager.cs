@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseManager : MonoBehaviour
 {
     public bool _paused = false;
+    public Sprite[] upDownImages;
+    public GameObject upDown;
     
     [SerializeField] private GameObject _pauseObj;
 
@@ -34,5 +34,17 @@ public class PauseManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("Menu");
+    }
+
+    public void changeUpDownImage()
+    {
+        if (upDown.GetComponent<Image>().sprite.name == "down")
+        {
+            upDown.GetComponent<Image>().sprite = upDownImages[0];
+        }
+        else
+        {
+            upDown.GetComponent<Image>().sprite = upDownImages[1];
+        }
     }
 }
