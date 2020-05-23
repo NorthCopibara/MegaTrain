@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Asset.Scripts.Qbik.Statick.Log
+namespace Asset.Scripts.Qbik.Static.Log
 {
     public static class Log
     {
@@ -10,7 +10,7 @@ namespace Asset.Scripts.Qbik.Statick.Log
 
         public static void MyDebugLog(string script, string metod, string value)
         {
-            if(script == nameCheck)
+            //if(script == nameCheck)
                 Debug.Log(script + "/" + metod + ": " + value + "\n");
         }
 

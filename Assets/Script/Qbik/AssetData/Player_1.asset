@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caaef0ea233a6ad4aaf68bc5933696c6, type: 3}
+  m_Name: Player_1
+  m_EditorClassIdentifier: 
+  _upExp: 100
+  _health: 1000
+  _armor: 1
+  _speed: 6
+  _attackRate: 2
+  _nextAttackTime: 1
+  _attackRange: 0.5
+  _damage: 010000000a00000014000000
+  _damageForce: 320000005000000064000000
+  _extraJump: 0
+  _jumpForce: 0
+  dUpExp: 5
+  dHealth: 100
+  dArmor: 1
+  dDamage: 050000000500000005000000

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Paralacs : MonoBehaviour
 {
-    public List<GameObject> _tiles;
+    [SerializeField] private List<GameObject> _tiles;
 
     public int _speed;
 
-    public int _tagPosition;
+    [SerializeField] private float _tagPosition;
 
     private List<Rigidbody2D> _rb = new List<Rigidbody2D>();
     private Vector2 _force;

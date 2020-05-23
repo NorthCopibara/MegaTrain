@@ -1,20 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Scripts.Qbik.Static.Data;
 
 public class EventData : MonoBehaviour
 {
+    [SerializeField] private GameObject _light;
+    [SerializeField] private GameObject _effects;
+    [SerializeField] private GameObject _trainSprite;
+
     private GameObject _player;
     private GameObject _train;
 
-    private EnemySpawner[] spawner;
-
     int _tpDistance;
-
-    private void Start()
-    {
-        spawner = FindObjectsOfType<EnemySpawner>();
-    }
 
     public void SetButton(GameObject player, GameObject train, int tpDistance)
     {
@@ -24,14 +22,31 @@ public class EventData : MonoBehaviour
     }
     public void ClickButton()
     {
+        if (_player == null || _train == null)
+            return;
+
         _player.transform.position = new Vector3(_player.transform.position.x, _player.transform.position.y + _tpDistance * 2, 0);
 
         if (_tpDistance > 0)
+        {
+            AllData.SetStateGame(State.Roof);
+            _trainSprite.SetActive(true);
             _train.SetActive(false);
+            _light.SetActive(true);
+            _effects.SetActive(true);
+        }
         else
+        {
+            AllData.SetStateGame(State.Car);
+            _trainSprite.SetActive(false);
+            _light.SetActive(false);
+            _effects.SetActive(false);
             _train.SetActive(true);
+        }
 
         _train = null;
         _player = null;
     }
+
+    
 }

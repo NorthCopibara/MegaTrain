@@ -13,6 +13,13 @@ namespace Asset.Scripts.Qbik.Static.Controller
             return _moveDir;
         }
 
+        public static bool InputSlash() 
+        {
+            if(Input.GetKeyDown(KeyCode.LeftShift))
+                return true;
+            return false;
+        }
+
         public static bool InputJump() 
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -24,7 +31,7 @@ namespace Asset.Scripts.Qbik.Static.Controller
         {
             int typeAttack = 0;
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetButtonDown("Fire1"))
             {
                 typeAttack = 1;
             }

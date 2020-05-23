@@ -1,209 +1,195 @@
 ﻿using UnityEngine;
 using Asset.Scripts.Qbik.Static.Controller;
-using Asset.Scripts.Qbik.Static.Anim;
 using System.Collections.Generic;
+using Asset.Scripts.Qbik.Static.Log;
+using Assets.Scripts.Qbik.Static.Data;
+using System.Collections;
 
-public class PlayerController: MonoBehaviour, ICam
+public class PlayerController : Controller, ICam, IPlayer
 {
-    #region Deligate
-    public delegate bool JumpInput();
-    public static event JumpInput isFly;
-
-    public delegate int AttackInput();
-    public static event AttackInput isAttack;
-
-    public delegate bool Ground(Transform groundChek, float checkRadius, LayerMask whatIsGround);
-    public static event Ground isGround;
-
-    public delegate float Input();
-    public static event Input checInput;
-
-    public delegate void Move(float move, float speed, Rigidbody2D rb);
-    public static event Move isMove;
-
-    public delegate void Flip(Rigidbody2D rb, Transform spritTransform);
-    public static event Flip goFlip;
-    #endregion
-
     [Header("Спрайт для поворота")]
     [SerializeField] private Transform _enemyGFX;
     [Header("Коллайдеры атаки")]
-    [SerializeField] private List<GameObject> _colliderAttack;
+    [SerializeField] private Transform _attackPoint;
 
+    [Header("Смена камер при переходе между уровнями")]
     [SerializeField] private List<GameObject> _cam;
 
-    [Space (5)]
-    [Header("Объект чека земли")]
-    [SerializeField] private Transform _groundChek;
-    [Header("Радиус проверки земли")]
-    [SerializeField] private float _checkRadius;
-    [Header("Обозначение слоя земли")]
-    [SerializeField] private LayerMask _whatIsGround;
+    [SerializeField] private int _distSlash;
 
+    private Character _charact;
     private Rigidbody2D _rb;
     private Animator _animate;
-    private int _extraJump;
-    private float _jumpForce;
     private float _speed;
 
-    private bool _isJump;
-    private bool _isAttack;
+    AttackData _attackData;
+    private float _attackRate;
+    private float _attackRange;
+    private float _nextAttackTime;
+    private bool _isAttack = false;
+    private bool _isCombo_1 = false;
+    private bool _isCombo_2 = false;
 
-    State _lastState;
-
-    private void Start()
+    public void Init() 
     {
-        _rb      = GetComponent<Rigidbody2D>();
-        _animate = GetComponent<Animator>();
-    }
+        _speed = AllData.PlayerData._speed;
 
-    public void Initialized(PlayerData data) 
-    {
-        _extraJump = data._extraJump;
-        _speed = data._speed;
-        _jumpForce = data._jumpForce;
-
-        isAttack    += SInput.InputAttack;
-        isFly       += SInput.InputJump;
-        checInput   += SInput.InputControll;
-
-        #region InitAttack
-        AttackData _attackData = new AttackData(data._damage, "Enemy", TypeAttack.Fiz);
-        _colliderAttack[0].GetComponent<AttackCollision>().Initialized(_attackData);
+        #region InitAttack 
+        List<int> _damage = AllData.PlayerData._damage;
+        List<int> _damageForce = AllData.PlayerData._damageForce;
+        _attackRange = AllData.PlayerData._attackRange;
+        _attackRate = AllData.PlayerData._attackRate;
+        _nextAttackTime = AllData.PlayerData._nextAttackTime;
+        _attackData = new AttackData(_damage,_damageForce , LayerMask.GetMask("Enemy"), TypeAttack.Fiz, "Enemy", 0);
         #endregion
 
+        CharacterData charData = new CharacterData();
+        charData._health = AllData.PlayerData._health;
+        charData._armor = AllData.PlayerData._armor;
+        charData._lvl = AllData.PlayerData._lvl;
+        _charact.Initialized(charData);
+    }
+
+    public void Initialized()
+    {
+        _charact = GetComponent<Character>();
+        AllData.SetPlayerInterface(GetComponent<IPlayer>()); //Выдаем статику интерфес взаимодействия с игроком
+        Init();
+
+        _rb = GetComponent<Rigidbody2D>();
+        _animate = GetComponent<Animator>();
+
         //Подписка на апдейт
-        ControlSystem.fixedUpdate += FixedUpdateController;
+        ControlSystem.fixedUpdate   += FixedUpdateController;
+        ControlSystem.update        += UpdateController;
+    }
+
+    public void UpdateController() 
+    {
+        AttackElement();
+        SlashElement();
     }
 
     public void FixedUpdateController() 
     {
-        #region Jump
-        if (isFly != null) 
+        if (AllData.StateGame != State.Load)
         {
-            if ((bool)isFly?.Invoke()) 
-            {
-                Debug.Log("jump");
-                isFly    -= SInput.InputJump;
-                isGround += SController.IsGround;
-                SController.Jump(_extraJump, _jumpForce, _rb);
-
-                SetLastState();
-                StateMachine.SetState(State.JUMP, _animate);
-            }
-        }
-        
-        if (isGround != null) 
-        {
-            if (!(bool)isGround?.Invoke(_groundChek, _checkRadius, _whatIsGround))
-            {
-                _isJump = true; //Ждем достаточной высоты для активации чека
-            }
-            else if (_isJump)
-            {
-                Debug.Log("ground");
-                isGround -= SController.IsGround;
-                isFly += SInput.InputJump;
-
-                StateMachine.SetState(_lastState, _animate);
-                _isJump = false;
-            }
-        }
-
-        if (isFly != null && isGround != null) //костыль на баг
-        {
-            isGround -= SController.IsGround;
-            Debug.Log("error");
-        }
-        #endregion
-
-        #region Move
-        if (checInput != null) //Вводные перемещения
-        {
-            if (checInput?.Invoke() != 0 && isMove == null)
-            {
-                isMove += SController.Move;
-                goFlip += SController.Flip;
-
-                StateMachine.SetState(State.MOVE, _animate);
-                SetLastState();
-            }
-            else if(checInput?.Invoke() == 0 && isMove != null)
-            {
-                isMove?.Invoke(0, _speed, _rb); //Костыль на отпись, сохраняется текущее значение, изменить контроллер
-                isMove -= SController.Move;
-                goFlip -= SController.Flip;
-
-                StateMachine.SetState(State.IDLE, _animate);
-                SetLastState();
-            }
-        }
-
-        if (isMove != null)
-        {
-            if (!_isAttack)
-            {
-                isMove?.Invoke(SInput.InputControll(), _speed, _rb);
-                if (goFlip != null)
-                {
-                    goFlip?.Invoke(_rb, _enemyGFX);
-                }
-            }
-            else
-            {
-                isMove?.Invoke(0, _speed, _rb);
-            }
-        }
-        #endregion
-        
-        #region Attack
-        if (isAttack != null) //костыль на фикс проверки
-        {
-            if (isAttack?.Invoke() == 1)
-            {
-                SController.AttackCollision(_colliderAttack[0], true);
-
-                if(!_isAttack)
-                    SetLastState();
-                StateMachine.SetState(State.ATTACK, _animate);
-
-                isFly -= SInput.InputJump;
-                checInput -= SInput.InputControll;
-                if(isMove != null)
-                    isMove?.Invoke(0, _speed, _rb);
-
-
-                _isAttack = true;
-            }
-
-            if (!_colliderAttack[0].active && _isAttack)
-            {
-                StateMachine.SetState(_lastState, _animate);
-                SetLastState();
-                _isAttack = false;
-
-                isFly += SInput.InputJump;
-                checInput += SInput.InputControll;
-            }
-        }
-        #endregion
-
-        
-
-        if (isFly == null && checInput == null && isAttack == null) //Костыль на нулевое состояние
-        {
-            StateMachine.SetState(State.IDLE, _animate);
+            MoveElement();
+            Flip(_enemyGFX.transform, _rb);
+            
         }
     }
 
-    private void SetLastState()
+    private bool stopSlash;
+
+    private void SlashElement() 
     {
-        _lastState = StateMachine._state;
+        if (SInput.InputSlash() && !stopSlash)
+        {
+            int flip = 0;
+            if (_enemyGFX.transform.localScale.x > 0)
+            {
+                flip = _distSlash;
+            }
+            else
+            {
+                flip = -_distSlash;
+            }
+            gameObject.tag = "SLASH";
+            Slash(new Vector2(flip, 0), _rb);
+            stopSlash = true;
+            StartCoroutine(GSlash());
+        }
+    }
+
+    private IEnumerator GSlash() 
+    {
+        yield return new WaitForSeconds(0.1f);
+        gameObject.tag = "Player";
+        stopSlash = false;
+    }
+
+    private void AttackElement()
+    {
+        if (Time.time >= _nextAttackTime)
+        {
+            _isAttack = false;
+            _isCombo_1 = false;
+            _isCombo_2 = false;
+            switch (SInput.InputAttack())
+            {
+                case 1:
+                    Attack(_attackRange, _attackPoint, _attackData, 1);
+                    _animate.SetTrigger("AttackTrigger");
+                    _nextAttackTime = Time.time + 1f / _attackRate;
+                    _isAttack = true;
+                    _isCombo_1 = false;
+                    _isCombo_2 = false;
+                    Log.MyDebugLog("PlayerController", "Attack", "IAttack");
+                    break;
+            }
+        }
+        else if (!_isCombo_1)
+        {
+            switch (SInput.InputAttack())
+            {
+                case 1:
+                    Attack(_attackRange, _attackPoint, _attackData, 2);
+                    _animate.SetTrigger("ComboTrigger_1");
+                    _nextAttackTime = 0;
+                    _nextAttackTime = Time.time + 1f / _attackRate;
+                    _isCombo_1 = true;
+                    Log.MyDebugLog("PlayerController", "Attack", "ICombo");
+                    break;
+            }
+        }
+        else if (!_isCombo_2 && _isCombo_1) 
+        {
+            switch (SInput.InputAttack())
+            {
+                case 1:
+                    Attack(_attackRange, _attackPoint, _attackData, 3);
+                    _animate.SetTrigger("ComboTrigger_2");
+                    _nextAttackTime = 0;
+                    _nextAttackTime = Time.time + 1f / _attackRate;
+                    _isCombo_2 = true;
+                    Log.MyDebugLog("PlayerController", "Attack", "ICombo_2");
+                    break;
+            }
+        }
+    }
+
+    private void MoveElement() 
+    {
+        float move = 0;
+        if (!_isAttack)
+            move = SInput.InputControll() * _speed;
+        else
+            move = 0;
+
+        Move(move, _rb);
+
+        if (move != 0)
+        {
+            _animate.SetBool("IDLE", false);
+            _animate.SetBool("MOVE", true);
+        }
+        else 
+        {
+            _animate.SetBool("MOVE", false);
+            _animate.SetBool("IDLE", true);
+        }
     }
 
     public void SwapCam(int i, int j) 
     {
         _cam[i].SetActive(false);
         _cam[j].SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        ControlSystem.fixedUpdate   -= FixedUpdateController;
+        ControlSystem.update        -= UpdateController;
     }
 }

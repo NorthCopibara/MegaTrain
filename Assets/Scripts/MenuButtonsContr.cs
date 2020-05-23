@@ -23,7 +23,7 @@ public class MenuButtonsContr : MonoBehaviour
     
     public void StartGame()
     {
-        Application.LoadLevel("exampleScene");
+        Application.LoadLevel("Load");
     }
     
     private void SetSoundVolume(float volume)

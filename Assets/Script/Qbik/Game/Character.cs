@@ -1,44 +1,153 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using Asset.Scripts.Qbik.Static.Pool;
+using Assets.Scripts.Qbik.Static.Data;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Character : MonoBehaviour, ITakeDamage
 {
     private int _charHealth;
     private int _charArmor;
+    private int _exp;
 
+    private float timeDeath;
+
+    private GameObject buttonNextLvl;
+
+    [SerializeField] private List<GameObject> _playerCam;
+
+    [SerializeField] private TextMeshProUGUI _lvlText;
     [SerializeField] private HealthBar _healthBar;
+
+
+    [SerializeField] private ParticleSystem _particle;
+    [SerializeField] private ParticleSystem _particleDeath;
+
+    [SerializeField] private bool robot;
+    [SerializeField] private bool player;
+    [SerializeField] private bool golem;
+
+    public List<GameObject> ReCam()
+    {
+        return _playerCam;
+    }
+
+    public void InitGolem(GameObject obj) 
+    {
+        buttonNextLvl = obj;
+    }
 
     public void Initialized(CharacterData dataInit) 
     {
+        if (_lvlText != null)
+            _lvlText.text = dataInit._lvl.ToString();
+
+        timeDeath = dataInit._timeDeath;
+
+        _exp = dataInit._exp;
         _charHealth = dataInit._health;
         _charArmor  = dataInit._armor;
+
+        if (_healthBar != null)
+        {
+            Slider sl = _healthBar.GetComponent<Slider>();
+            sl.maxValue = _charHealth;
+            sl.value = _charHealth;
+        }
     }
 
-    public void TakeDamage(AttackData attack)
-    {
-        int damage = attack._damage / _charArmor;
+    public void TakeDamage(AttackData attack, int num)
+   {
+        VisualDamage();
+        int damage = 0;
+
+        if (player)
+        {
+            damage = attack._damage[0] / _charArmor;
+        }
+        else 
+        {
+             damage = attack._damage[num - 1] / _charArmor;
+        }
         _charHealth -= damage;
 
         ChekDeth(damage);
     }
 
+    private void VisualDamage()
+    {
+        if( _particle!= null)
+            _particle.Play();
+    }
+
+
     private void ChekDeth(int damage) 
     {
         if (_charHealth <= 0)
         {
-            Destroy(gameObject);
+            if (robot) 
+            {
+                AllData.AddExp(_exp);
+                GetComponent<EnemyAI>().DethEnemy();
+                StartCoroutine(DehtRobo());
+            }
+            if (golem)
+            {
+                #region SpawnTP
+                //Добавь тут остановку спавна
+                GameObject tp = Resources.Load<GameObject>("Models/Prefabs/Character/TPObj") as GameObject;
+                GameObject rek = Instantiate(tp, transform.position, Quaternion.identity);
+                NextZone zone = rek.GetComponent<NextZone>();
+                if (zone != null && buttonNextLvl != null) 
+                {
+                    zone.Init(buttonNextLvl);
+                }
+                else 
+                {
+                    //Poshol nafig
+                }
+
+                
+                #endregion
+
+                AllData.AddExp(_exp);
+                Destroy(gameObject); //Метод смерти
+            }
+            if (player)
+            {
+                //Выполнить это все в каком то окне!
+                //Вызвать анимацию смерти
+                SceneManager.LoadScene("MainMenu");
+                AllData.ClearLvl();
+                ManagerPool.Dispose();
+                //Destroy(gameObject);
+            }
         }
-        else
+        if (_healthBar != null)
+            _healthBar.ApllyDamage(damage);
+    }
+
+    private IEnumerator DehtRobo() 
+    {
+        yield return new WaitForSeconds(timeDeath);
+        if (_particleDeath != null) 
         {
-            if(_healthBar != null)
-                _healthBar.ApllyDamage(damage);
+            _particleDeath.Play();
         }
+        yield return new WaitForSeconds(0.2f);
+        ManagerPool.DeSpawn(PoolType.Robot, this.gameObject);
     }
 }
 
 public struct CharacterData 
 {
+    public int _exp;
+    public int _lvl;
     public int _health;
     public int _armor;
+
+    public float _timeDeath;
 }

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eaad9863f5683f4db9c9d1f76863dff, type: 3}
+  m_Name: Enemy_golem
+  m_EditorClassIdentifier: 
+  _exp: 1000
+  _health: 1
+  _armor: 3
+  _speed: 90000
+  _damage: 1000
+  _timeToAttack: 2
+  _timeStopAttack: 1
+  _timeNextAttack: 3
+  _timeSpawn: 1.5
+  _timeDeath: 3
+  _nextWaypointDistance: 3
+  _attackRate: 1
+  _targetAttack:
+    serializedVersion: 2
+    m_Bits: 1024
+  _tagAttack: Player
+  _type: 0
+  dExp: 0
+  dHealth: 0
+  dArmor: 0
+  dDamage: 0

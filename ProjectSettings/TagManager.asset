@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Enemy
   - Player
+  - SLASH
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Enemy
   - Player
   - Attack
-  - 
+  - Car
   - 
   - 
   - 
@@ -41,6 +42,21 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Sky
+    uniqueID: 4127536235
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Car
+    uniqueID: 3809583035
+    locked: 0
+  - name: Forvard
+    uniqueID: 2084845013
+    locked: 0
+  - name: Player
+    uniqueID: 3403522585
+    locked: 0
+  - name: Last
+    uniqueID: 2928106211
     locked: 0

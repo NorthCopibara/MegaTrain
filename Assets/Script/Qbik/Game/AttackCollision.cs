@@ -2,7 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
-using Asset.Scripts.Qbik.Statick.Log;
+using Asset.Scripts.Qbik.Static.Log;
 
 public class AttackCollision: MonoBehaviour
 {
@@ -20,38 +20,18 @@ public class AttackCollision: MonoBehaviour
 
     IEnumerator AttackCollider()
     {
-        yield return new WaitForSeconds(0.3f); //Время пока фиксировано, тут надо задавать длительность существования коллайдера
+        yield return new WaitForSeconds(_attackData._timeStopAttack); //Время пока фиксировано, тут надо задавать длительность существования коллайдера
         gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision) //Событие коллизии
     {
-        if (collision.gameObject.tag == _attackData._targetAttack) //Если таг объекта нам подходит
-            collision.gameObject.GetComponent<ITakeDamage>().TakeDamage(_attackData); //Передает чарактер в метода атаки родительского чарактера
+          if (collision.gameObject.tag == _attackData._tagAttack) //Если таг объекта нам подходит
+                collision.gameObject.GetComponent<ITakeDamage>().TakeDamage(_attackData, 0); //Передает чарактер в метода атаки родительского чарактера
     }
 
     private void OnDisable()
     {
         StopAllCoroutines(); //Стопим корутин при выключении объекта
-    }
-}
-
-public enum TypeAttack 
-{
-    Fiz,
-    Mag
-}
-
-public struct AttackData
-{
-    public int _damage;
-    public string _targetAttack;
-    public TypeAttack _type;
-
-    public AttackData(int _damage, string _targetAttack, TypeAttack _type) 
-    {
-        this._damage = _damage;
-        this._targetAttack = _targetAttack;
-        this._type = _type;
     }
 }
