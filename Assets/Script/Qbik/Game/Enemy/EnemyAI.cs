@@ -46,6 +46,7 @@ public class EnemyAI : Controller, IPoolible
 
     private State myState;
     private bool iDeath;
+
     public bool CheckState()
     {
         if (myState != AllData.StateGame) //Если мое состояние отличается от состояния игры то начинаем думать что делать
@@ -78,12 +79,9 @@ public class EnemyAI : Controller, IPoolible
         _tplPointLeft = tpPoint[2];
         _tplPointRight = tpPoint[3];
 
-        
-
         _playerPosition = FindObjectOfType<PlayerController>().gameObject.transform;
 
         moveAnimState = true; //Разрешаем бежать енеми. Добавить состояние спавна
-
 
         List<int> at = new List<int>() { data._damage };
         List<int> atF = null;
@@ -286,7 +284,6 @@ public class EnemyAI : Controller, IPoolible
 
         ControllerEnemy();
     }
-
 
     IEnumerator TimeAttack()
     {

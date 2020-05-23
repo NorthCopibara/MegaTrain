@@ -17,11 +17,11 @@ MonoBehaviour:
   _armor: 3
   _speed: 90000
   _damage: 1
-  _timeToAttack: 2
+  _timeToAttack: 1
   _timeStopAttack: 1
   _timeNextAttack: 3
   _timeSpawn: 1.5
-  _timeDeath: 3
+  _timeDeath: 1.5
   _nextWaypointDistance: 3
   _targetAttack:
     serializedVersion: 2
@@ -29,6 +29,6 @@ MonoBehaviour:
   _tagAttack: Player
   _type: 0
   dExp: 0
-  dHealth: 0
+  dHealth: 1000
   dArmor: 0
-  dDamage: 0
+  dDamage: 10000

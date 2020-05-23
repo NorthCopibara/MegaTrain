@@ -11,8 +11,11 @@ public class Loader : MonoBehaviour
 
     [Header ("Количество мобов в пулле на старне")]
     [SerializeField] private int countEnemy;
-    GameObject obj;
 
+    [SerializeField] private GameObject buttonStart;
+
+    GameObject obj;
+    AsyncOperation async;
     private void CreateGame()
     {
         //obj = Instantiate(Resources.Load<GameObject>("Models/Prefabs/ControlSystem/[CONTROLSYSTEM]") as GameObject);
@@ -68,7 +71,7 @@ public class Loader : MonoBehaviour
         DontDestroyOnLoad(poolsGO);
 
         //Scene currentScene = SceneManager.GetActiveScene();
-        AsyncOperation async = SceneManager.LoadSceneAsync(name, LoadSceneMode.Single);
+        async = SceneManager.LoadSceneAsync(name, LoadSceneMode.Single);
         async.allowSceneActivation = false;
 
         while (async.progress < 0.9f)
@@ -76,13 +79,18 @@ public class Loader : MonoBehaviour
             yield return null;
         }
 
-
+        buttonStart.SetActive(true);
         //SceneManager.MoveGameObjectToScene(poolsGO, SceneManager.GetSceneByName(name));
         //SceneManager.MoveGameObjectToScene(obj, SceneManager.GetSceneByName(name));
         //controlSystem.Init();
-        async.allowSceneActivation = true;
+
         //SceneManager.UnloadSceneAsync(currentScene);
-        
+
         yield break;
+    }
+
+    public void GoGame() 
+    {
+        async.allowSceneActivation = true;
     }
 }

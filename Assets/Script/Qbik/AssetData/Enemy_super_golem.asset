@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enemy_super_golem
   m_EditorClassIdentifier: 
   _exp: 0
-  _health: 10000
+  _health: 5
   _armor: 5
   _speed: 100000
   _damage: 5000
@@ -21,9 +21,8 @@ MonoBehaviour:
   _timeStopAttack: 1
   _timeNextAttack: 2
   _timeSpawn: 1.5
-  _timeDeath: 0
+  _timeDeath: 1.5
   _nextWaypointDistance: 3
-  _attackRate: 1
   _targetAttack:
     serializedVersion: 2
     m_Bits: 1024

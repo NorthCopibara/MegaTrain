@@ -36,13 +36,24 @@ public class DataSetuper : MonoBehaviour
         dPlayer.dArmor = dataPlayer.dArmor;
         dPlayer.dDamage = dataPlayer.dDamage;
 
-        DefDataEnemy dEnemy = new DefDataEnemy(); //Для роботов //Надо добавить и для голема такой
-        dEnemy.dExp = dataEnemy[0].dExp;
-        dEnemy.dHealth = dataEnemy[0].dHealth;
-        dEnemy.dArmor = dataEnemy[0].dArmor;
-        dEnemy.dDamage = dataEnemy[0].dDamage;
+        List<DefDataEnemy> wey = new List<DefDataEnemy>();
 
-        Calculate.IntDefData(dPlayer, dEnemy);
+        DefDataEnemy dEnemy_1 = new DefDataEnemy(); //Для роботов //Надо добавить и для голема такой
+        dEnemy_1.dExp = dataEnemy[0].dExp;
+        dEnemy_1.dHealth = dataEnemy[0].dHealth;
+        dEnemy_1.dArmor = dataEnemy[0].dArmor;
+        dEnemy_1.dDamage = dataEnemy[0].dDamage;
+
+        DefDataEnemy dEnemy_2 = new DefDataEnemy(); //Для роботов //Надо добавить и для голема такой
+        dEnemy_2.dExp = dataEnemy[1].dExp;
+        dEnemy_2.dHealth = dataEnemy[1].dHealth;
+        dEnemy_2.dArmor = dataEnemy[1].dArmor;
+        dEnemy_2.dDamage = dataEnemy[1].dDamage;
+
+        wey.Add(dEnemy_1);
+        wey.Add(dEnemy_2);
+
+        Calculate.IntDefData(dPlayer, wey);
         #endregion  
 
         ControlSystemData data = new ControlSystemData(zippen,playerSpawn ,playerLastSpawn, dataZone._timeSpawn);

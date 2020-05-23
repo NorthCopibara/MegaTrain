@@ -29,6 +29,7 @@ public class Character : MonoBehaviour, ITakeDamage
     [SerializeField] private bool robot;
     [SerializeField] private bool player;
     [SerializeField] private bool golem;
+    [SerializeField] private bool superGolem;
 
     public List<GameObject> ReCam()
     {
@@ -94,33 +95,24 @@ public class Character : MonoBehaviour, ITakeDamage
                 GetComponent<EnemyAI>().DethEnemy();
                 StartCoroutine(DehtRobo());
             }
+            if (superGolem) 
+            {
+                GetComponent<EnemyAI>().DethEnemy();
+                AllData.SetStateGame(State.Load);
+                AllData.SetStateLvl(LvlState.Load);
+                StartCoroutine(DehtSuperGolem());
+            }
             if (golem)
             {
-                #region SpawnTP
-                //Добавь тут остановку спавна
-                GameObject tp = Resources.Load<GameObject>("Models/Prefabs/Character/TPObj") as GameObject;
-                GameObject rek = Instantiate(tp, transform.position, Quaternion.identity);
-                NextZone zone = rek.GetComponent<NextZone>();
-                if (zone != null && buttonNextLvl != null) 
-                {
-                    zone.Init(buttonNextLvl);
-                }
-                else 
-                {
-                    //Poshol nafig
-                }
-
-                
-                #endregion
-
+                GetComponent<EnemyAI>().DethEnemy();
                 AllData.AddExp(_exp);
-                Destroy(gameObject); //Метод смерти
+                StartCoroutine(DehtGolem());
             }
             if (player)
             {
                 //Выполнить это все в каком то окне!
                 //Вызвать анимацию смерти
-                SceneManager.LoadScene("MainMenu");
+                SceneManager.LoadScene("Menu");
                 AllData.ClearLvl();
                 ManagerPool.Dispose();
                 //Destroy(gameObject);
@@ -128,6 +120,45 @@ public class Character : MonoBehaviour, ITakeDamage
         }
         if (_healthBar != null)
             _healthBar.ApllyDamage(damage);
+    }
+
+    private IEnumerator DehtSuperGolem()
+    {
+        yield return new WaitForSeconds(timeDeath);
+        if (_particleDeath != null)
+        {
+            _particleDeath.Play();
+        }
+        yield return new WaitForSeconds(2f);
+        AllData.ClearLvl();
+        ManagerPool.Dispose();
+        SceneManager.LoadScene("Menu");
+    }
+    
+    private IEnumerator DehtGolem()
+    {
+        yield return new WaitForSeconds(timeDeath);
+        if (_particleDeath != null)
+        {
+            _particleDeath.Play();
+        }
+        yield return new WaitForSeconds(0.5f);
+        #region SpawnTP
+        GameObject tp = Resources.Load<GameObject>("Models/Prefabs/Character/TPObj") as GameObject;
+        GameObject rek = Instantiate(tp, transform.position, Quaternion.identity);
+        NextZone zone = rek.GetComponent<NextZone>();
+        if (zone != null && buttonNextLvl != null)
+        {
+            zone.Init(buttonNextLvl);
+        }
+        else
+        {
+            //Poshol nafig
+        }
+        #endregion
+
+        Calculate.UpGolem();
+        Destroy(gameObject);
     }
 
     private IEnumerator DehtRobo() 

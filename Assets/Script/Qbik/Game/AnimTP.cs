@@ -40,9 +40,6 @@ public class AnimTP : MonoBehaviour
         Cam_3.SetActive(true);
         animTrain.SetTrigger("crash");
 
-        AllData.SetStateGame(State.Load);
-        AllData.SetStateLvl(LvlState.Load);
-
         StartCoroutine(dTime());
     }
 

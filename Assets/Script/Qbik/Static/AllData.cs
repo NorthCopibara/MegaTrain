@@ -130,6 +130,8 @@ namespace Assets.Scripts.Qbik.Static.Data
             playerData._speed = player._speed;
             playerData._extraJump = player._extraJump;
             playerData._jumpForce = player._jumpForce;
+            playerData._attackRange = player._attackRange;
+            playerData._nextAttackTime = player._nextAttackTime;
         }
 
         public static void SetPlayer(PlayerData data) 
@@ -249,6 +251,11 @@ namespace Assets.Scripts.Qbik.Static.Data
         public static void SetRobot(EnemyData data)
         {
             enemyDataPool[0] = data;
+        }
+
+        public static void SetGolem(EnemyData data) 
+        {
+            enemyDataPool[1] = data;
         }
         #endregion
 

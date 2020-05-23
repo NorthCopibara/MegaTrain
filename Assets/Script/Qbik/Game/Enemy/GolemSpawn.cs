@@ -34,6 +34,7 @@ public class GolemSpawn : MonoBehaviour
         data._armor = AllData.EnemyDataPool[f]._armor;
         data._lvl = AllData.EnemyDataPool[f]._lvl;
         data._exp = AllData.EnemyDataPool[f]._exp;
+        data._timeDeath = AllData.EnemyDataPool[f]._timeDeath;
 
         Character ch = obj.GetComponentInChildren<Character>();
         ch.Initialized(data);

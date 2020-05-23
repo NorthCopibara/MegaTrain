@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Assets.Scripts.Qbik.Static.Data;
 
 public class ButtonNextZone : MonoBehaviour
@@ -20,6 +21,9 @@ public class ButtonNextZone : MonoBehaviour
 
     public void NextZone() 
     {
+        AllData.SetStateGame(State.Load);
+        AllData.SetStateLvl(LvlState.Load);
+        gameObject.GetComponent<Image>().enabled = false;
         StartCoroutine(TP());
     }
 
@@ -38,5 +42,6 @@ public class ButtonNextZone : MonoBehaviour
             player.GetComponent<AnimTP>().LastStep();
             player.transform.position = playerLastSpawn.position;
         }
+        gameObject.GetComponent<Image>().enabled = true;
     }
 }

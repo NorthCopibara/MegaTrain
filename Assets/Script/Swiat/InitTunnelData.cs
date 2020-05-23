@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class InitTunnelData : MonoBehaviour
 {
-    public int[] spawnTunnelFirstIntervalInMinuts = new int[2];
-    public int[] spawnTunnelSecondIntervalInMinuts = new int[2];
+    private int[] spawnTunnelFirstIntervalInMinuts = new int[2];
+    private int[] spawnTunnelSecondIntervalInMinuts = new int[2];
 
     private bool _isTunnelStart = false;
     private bool _isTunnelEnd = false;
