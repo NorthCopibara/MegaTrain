@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Qbik.Static.Data;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,9 @@ public class DoorUp : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (AllData.Lvl == LvlState.Last)
+            return;
+
         if (collision.tag == "Player")
         {
             _button.SetActive(true);

@@ -18,13 +18,17 @@ public class FlySpawn : MonoBehaviour
         StartCoroutine(Spawn(5));
     }
 
+
     IEnumerator Spawn(int countEnemy) 
     {
         int count = 0;
         while (count < countEnemy)
         {
-            if (AllData.StateGame == State.Load)
+            if (AllData.Lvl != LvlState.Sky)
+            {
+                StopAllCoroutines();
                 break;
+            }
 
             for (int i = 0; i < 2; i++)
             {

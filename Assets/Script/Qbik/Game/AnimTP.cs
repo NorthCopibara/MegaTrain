@@ -9,6 +9,7 @@ public class AnimTP : MonoBehaviour
     private GameObject light;
     private GameObject trainRoof;
     private GameObject trainCar;
+    private GameObject trainCarLast;
     private GameObject backTrain;
     private GameObject Cam_1;
     private GameObject Cam_2;
@@ -21,6 +22,7 @@ public class AnimTP : MonoBehaviour
         animTrain = data.animTrain;
         trainRoof = data.trainRoof;
         trainCar = data.trainCar;
+        trainCarLast = data.trainCarLast;
         backTrain = data.backTrain;
         Cam_1 = data.Cam_1;
         Cam_2 = data.Cam_2;
@@ -47,17 +49,16 @@ public class AnimTP : MonoBehaviour
     public void LastStep()
     {
         AllData.SetStateGame(State.Load);
-        AllData.SetStateLvl(LvlState.Load);
-        
+        AllData.SetStateLvl(LvlState.Last);
+        trainCar.SetActive(false);
+        trainCarLast.SetActive(true);
         StartCoroutine(lTime());
     }
 
     private IEnumerator lTime() 
     {
         yield return new WaitForSeconds(2f);
-        AllData.SetStateGame(State.Car);
-        AllData.SetStateLvl(LvlState.Last);
-
+        AllData.SetStateGame(State.Car); //Агрим голема через и спавним его
         FindObjectOfType<GolemSpawn>().Spawn();
     }
 

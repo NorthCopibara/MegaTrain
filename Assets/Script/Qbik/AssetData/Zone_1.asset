@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3470b25e06122e74c9d7115a1cb39c7f, type: 3}
   m_Name: Zone_1
   m_EditorClassIdentifier: 
+  _timeSpawn: 20
   _maxCar: 2

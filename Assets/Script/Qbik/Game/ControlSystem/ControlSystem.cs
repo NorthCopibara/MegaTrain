@@ -22,9 +22,21 @@ public class ControlSystem : MonoBehaviour
     public static event FlySpawn flySpawn;
     #endregion
 
-    private bool dSpawn = false;
+    private bool lastCar;
+    private bool dSpawn;
     private float timeSpawn;
     private Animator zippen;
+
+    #region MapLogik
+    private GameObject forvardTrain;
+    private GameObject forvardTrainLast;
+    #endregion
+
+    public void InitMap(GameObject forvardTrain, GameObject forvardTrainLast) 
+    {
+        this.forvardTrain = forvardTrain;
+        this.forvardTrainLast = forvardTrainLast;
+    }
 
     public void Init() //Вызывается из сетапа при запуске сцены
     {
@@ -62,6 +74,22 @@ public class ControlSystem : MonoBehaviour
     {
         update?.Invoke();
         SpawnUpdatet();
+        MapLogikUpdate();
+    }
+
+    
+
+    private void MapLogikUpdate() 
+    {
+        if (!lastCar)
+        {
+            if (AllData.NumberCar == AllData.DataZone._maxCar - 1)
+            {
+                lastCar = true;
+                forvardTrain.SetActive(false);
+                forvardTrainLast.SetActive(true);
+            }
+        }
     }
 
     private void SpawnUpdatet() 
@@ -73,6 +101,7 @@ public class ControlSystem : MonoBehaviour
         else if (dSpawn)
         {
             StopCoroutine(TimeSpawn());
+            zippen.SetTrigger("Idle");
             dSpawn = false;
         }
     }

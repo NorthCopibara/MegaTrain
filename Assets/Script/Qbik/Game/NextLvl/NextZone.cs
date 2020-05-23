@@ -8,7 +8,6 @@ public class NextZone : MonoBehaviour
 {
     private GameObject buttonNextLvl;
     private ButtonNextZone but; //Мусор
-    private bool last;
 
     public void Init(GameObject buttonNextLvl)
     {

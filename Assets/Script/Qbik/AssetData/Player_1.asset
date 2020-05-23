@@ -18,7 +18,7 @@ MonoBehaviour:
   _speed: 6
   _attackRate: 2
   _nextAttackTime: 1
-  _attackRange: 0.5
+  _attackRange: 2
   _damage: 010000000a00000014000000
   _damageForce: 320000005000000064000000
   _extraJump: 0

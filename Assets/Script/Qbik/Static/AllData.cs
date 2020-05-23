@@ -253,7 +253,6 @@ namespace Assets.Scripts.Qbik.Static.Data
         #endregion
 
         #region Game
-
         public static Zone DataZone 
         {
             get { return dataZone; }

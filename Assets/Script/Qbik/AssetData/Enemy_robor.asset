@@ -17,13 +17,12 @@ MonoBehaviour:
   _armor: 1
   _speed: 200
   _damage: 5
-  _timeToAttack: 1
+  _timeToAttack: 1.5
   _timeStopAttack: 1
   _timeNextAttack: 2
   _timeSpawn: 1.5
   _timeDeath: 1
-  _nextWaypointDistance: 2
-  _attackRate: 1
+  _nextWaypointDistance: 3
   _targetAttack:
     serializedVersion: 2
     m_Bits: 1024

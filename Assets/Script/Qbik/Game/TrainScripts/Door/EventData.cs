@@ -14,6 +14,12 @@ public class EventData : MonoBehaviour
 
     int _tpDistance;
 
+    private void OnEnable()
+    {
+        if (AllData.Lvl == LvlState.Last)
+            gameObject.SetActive(false);
+    }
+
     public void SetButton(GameObject player, GameObject train, int tpDistance)
     {
         _tpDistance = tpDistance;

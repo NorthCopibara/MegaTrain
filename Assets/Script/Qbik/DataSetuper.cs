@@ -10,8 +10,10 @@ public class DataSetuper : MonoBehaviour
     [SerializeField] private Transform playerLastSpawn;
     [SerializeField] private List<Enemy> dataEnemy;
     [SerializeField] private Animator zippen;
-    [SerializeField] private float timeSpawn;
     [SerializeField] private Zone dataZone;
+    [SerializeField] private GameObject forvardTrain;
+    [SerializeField] private GameObject forvardTrainLast;
+
 
     private void OnEnable()
     {
@@ -22,6 +24,7 @@ public class DataSetuper : MonoBehaviour
 
         ControlSystem cs = obj.GetComponent<ControlSystem>();
         cs.Init();
+        cs.InitMap(forvardTrain, forvardTrainLast);
     }
 
     private void InitData() 
@@ -42,7 +45,7 @@ public class DataSetuper : MonoBehaviour
         Calculate.IntDefData(dPlayer, dEnemy);
         #endregion  
 
-        ControlSystemData data = new ControlSystemData(zippen,playerSpawn ,playerLastSpawn, timeSpawn);
+        ControlSystemData data = new ControlSystemData(zippen,playerSpawn ,playerLastSpawn, dataZone._timeSpawn);
 
         AllData.InitData(dataPlayer, dataEnemy, State.Load, data, dataZone);
     }

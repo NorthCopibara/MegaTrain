@@ -30,6 +30,8 @@ namespace Assets.Scripts.Qbik.Static.Data
             data._damageForce = AllData.PlayerData._damageForce;
             data._attackRate = AllData.PlayerData._attackRate;
             data._speed = AllData.PlayerData._speed;
+            data._attackRange = AllData.PlayerData._attackRange;
+            data._nextAttackTime = AllData.PlayerData._nextAttackTime;
             data._extraJump = AllData.PlayerData._extraJump;
             data._jumpForce = AllData.PlayerData._jumpForce;
 
@@ -52,7 +54,12 @@ namespace Assets.Scripts.Qbik.Static.Data
             data._health = AllData.EnemyDataPool[0]._health + lvlRobot * _dDataEnemy.dHealth; 
             data._armor = AllData.EnemyDataPool[0]._armor + _dDataEnemy.dArmor * lvlRobot;
             data._damage = AllData.EnemyDataPool[0]._damage + lvlRobot * _dDataEnemy.dDamage;
-
+            
+            data._timeDeath = AllData.EnemyDataPool[0]._timeDeath;
+            data._timeNextAttack = AllData.EnemyDataPool[0]._timeNextAttack;
+            data._timeSpawn = AllData.EnemyDataPool[0]._timeSpawn;
+            data._timeStopAttack = AllData.EnemyDataPool[0]._timeStopAttack;
+            data._timeToAttack = AllData.EnemyDataPool[0]._timeToAttack;
             data._speed = AllData.EnemyDataPool[0]._speed;
             data._nextWaypointDistance = AllData.EnemyDataPool[0]._nextWaypointDistance;
             data._attackRate = AllData.EnemyDataPool[0]._attackRate;

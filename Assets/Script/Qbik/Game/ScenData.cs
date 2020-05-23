@@ -8,6 +8,7 @@ public struct TPData
     public GameObject light;
     public GameObject trainRoof;
     public GameObject trainCar;
+    public GameObject trainCarLast;
     public GameObject backTrain;
     public GameObject Cam_1;
     public GameObject Cam_2;
@@ -20,6 +21,7 @@ public class ScenData : MonoBehaviour
     [SerializeField] private GameObject light;
     [SerializeField] private GameObject trainRoof;
     [SerializeField] private GameObject trainCar;
+    [SerializeField] private GameObject trainCarLast;
     [SerializeField] private GameObject backTrain;
 
     
@@ -30,6 +32,7 @@ public class ScenData : MonoBehaviour
         data.animTrain = animTrain;
         data.trainRoof = trainRoof;
         data.trainCar = trainCar;
+        data.trainCarLast = trainCarLast;
         data.backTrain = backTrain;
         data.Cam_1 = null;
         data.Cam_2 = null;
