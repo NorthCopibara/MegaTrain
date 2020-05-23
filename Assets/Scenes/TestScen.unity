@@ -812,9 +812,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdfd0edd0ffbb754bac6284f6e765841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerCam: []
+  _lvlText: {fileID: 0}
   _healthBar: {fileID: 0}
-  text: {fileID: 2100000, guid: f51091289fbcfaa408538e14d766c93e, type: 2}
-  spriteText: {fileID: 0}
+  _particle: {fileID: 0}
+  _particleDeath: {fileID: 0}
+  robot: 0
+  player: 0
+  golem: 0
 --- !u!1 &746260957958654605
 GameObject:
   m_ObjectHideFlags: 0
@@ -843,8 +848,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 249086d4cba68fd43bb470f28ac829ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackPoint: {fileID: 1381030149704157399}
-  _attackRange: 0.5
+  _attackCollision: {fileID: 0}
+  _sprite: {fileID: 0}
+  iGolem: 0
 --- !u!4 &1381030149704157399
 Transform:
   m_ObjectHideFlags: 0

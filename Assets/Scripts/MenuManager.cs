@@ -19,6 +19,11 @@ public class MenuManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public void StartGame()
+    {
+        Application.LoadLevel("Load");
+    }
+
     public void ChangeMainBg()
     {
         if (mainMg.GetComponent<Image>().sprite == bgImages[0])
