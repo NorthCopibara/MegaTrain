@@ -35,6 +35,7 @@ public class EventData : MonoBehaviour
 
         if (_tpDistance > 0)
         {
+            //_player.GetComponent<PlayerController>().SwapCam(1, 0);
             AllData.SetStateGame(State.Roof);
             _trainSprite.SetActive(true);
             _train.SetActive(false);
@@ -43,6 +44,7 @@ public class EventData : MonoBehaviour
         }
         else
         {
+            //_player.GetComponent<PlayerController>().SwapCam(0, 1);
             AllData.SetStateGame(State.Car);
             _trainSprite.SetActive(false);
             _light.SetActive(false);

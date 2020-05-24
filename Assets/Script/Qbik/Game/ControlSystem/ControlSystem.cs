@@ -77,8 +77,6 @@ public class ControlSystem : MonoBehaviour
         MapLogikUpdate();
     }
 
-    
-
     private void MapLogikUpdate() 
     {
         if (!lastCar)
@@ -100,7 +98,7 @@ public class ControlSystem : MonoBehaviour
         }
         else if (dSpawn)
         {
-            StopCoroutine(TimeSpawn());
+            StopAllCoroutines();
             zippen.SetTrigger("Idle");
             dSpawn = false;
         }
@@ -109,6 +107,7 @@ public class ControlSystem : MonoBehaviour
     private IEnumerator TimeSpawn() 
     {
         yield return new WaitForSeconds(timeSpawn);
+        AllData.UpSpawn();
         dSpawn = false;
     }
 
@@ -116,10 +115,9 @@ public class ControlSystem : MonoBehaviour
     {
         if (!dSpawn)
         {
-            if(AllData.NumberSpawn != 0)
+            if (AllData.NumberSpawn != 0)
                 Calculate.UpRobot();
-
-            AllData.UpSpawn();
+            
             zippen.SetTrigger("PlaySpawn");
             dSpawn = true;
             StartCoroutine(TimeSpawn());
@@ -140,6 +138,8 @@ public class ControlSystem : MonoBehaviour
 
     private void OnDestroy()
     {
+        Calculate.ClearData(); //Не надо
         AllData.ClearLvl(); //Чистим некоторые данные в кс
+        StopAllCoroutines(); //Не надо
     }
 }

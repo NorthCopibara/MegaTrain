@@ -23,6 +23,8 @@ public class EnemyAI : Controller, IPoolible
     [SerializeField] private GameObject _sprite;
     [SerializeField] private bool iGolem;
 
+    [SerializeField] private GameObject _objBurByGolem;
+
     private Seeker _seeker;
     private Path _path;
 
@@ -42,7 +44,7 @@ public class EnemyAI : Controller, IPoolible
     private bool moveAnimState;
 
     private bool oneState;
-    private bool oneSet;
+    private bool oneSet = true;
 
     private State myState;
     private bool iDeath;
@@ -146,7 +148,8 @@ public class EnemyAI : Controller, IPoolible
         if (_path == null)
             return;
 
-        Flip(_enemyGFX, _playerPosition); //Поворот спрайта
+        if (!cdAttack)
+            Flip(_enemyGFX, _playerPosition); //Поворот спрайта
 
         if (currentWaypoint >= _path.vectorPath.Count) //Смотрим дистанцию до цели
         {
@@ -214,6 +217,7 @@ public class EnemyAI : Controller, IPoolible
         }
     }
 
+
     public void FixedUpdateController() //Апдейтаем поведение (данный метод можно убрать в детей и задавать различные состояния в родительском классе енеми) Надо сделать более функциональным
     {
         if (myState != AllData.StateGame) //Если мое состояние отличается от состояния игры то начинаем думать что делать
@@ -258,6 +262,8 @@ public class EnemyAI : Controller, IPoolible
                 if (!oneSet)
                 {
                     oneSet = true;
+                    if (_objBurByGolem != null)
+                         _objBurByGolem.SetActive(false);
                     _target = transform;
                 }
             }
@@ -276,6 +282,8 @@ public class EnemyAI : Controller, IPoolible
             {
                 if (oneSet)
                 {
+                    if(_objBurByGolem != null)
+                        _objBurByGolem.SetActive(true);
                     oneSet = false;
                     _target = _playerPosition;
                 }

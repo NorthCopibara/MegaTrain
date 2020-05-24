@@ -24,7 +24,14 @@ public class ScenData : MonoBehaviour
     [SerializeField] private GameObject trainCarLast;
     [SerializeField] private GameObject backTrain;
 
-    
+    [SerializeField] private GameObject deathConvas;
+
+    public void iDeath() 
+    {
+        Time.timeScale = 0;
+        deathConvas.SetActive(true);
+    }
+
     public TPData ReData() 
     {
         TPData data = new TPData();

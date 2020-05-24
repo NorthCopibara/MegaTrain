@@ -16,7 +16,7 @@ public class MenuManager : MonoBehaviour
     private void Start()
     {
         LoadSettings();
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     public void StartGame()

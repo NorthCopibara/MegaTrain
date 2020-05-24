@@ -159,6 +159,14 @@ public class PlayerController : Controller, ICam, IPlayer
         }
     }
 
+    public void DeathPlayer() 
+    {
+        gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
+        _rb.constraints = RigidbodyConstraints2D.FreezeAll;
+
+        _animate.SetTrigger("death");
+    }
+
     private void MoveElement() 
     {
         float move = 0;

@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eaad9863f5683f4db9c9d1f76863dff, type: 3}
   m_Name: Enemy_robor
   m_EditorClassIdentifier: 
-  _exp: 10
+  _exp: 5
   _health: 100
   _armor: 1
   _speed: 200
   _damage: 5
-  _timeToAttack: 1.5
-  _timeStopAttack: 1
+  _timeToAttack: 0.6
+  _timeStopAttack: 0.7
   _timeNextAttack: 2
   _timeSpawn: 1.5
   _timeDeath: 1
@@ -28,7 +28,7 @@ MonoBehaviour:
     m_Bits: 1024
   _tagAttack: Player
   _type: 0
-  dExp: 10
-  dHealth: 100
-  dArmor: 1
-  dDamage: 5
+  dExp: 13
+  dHealth: 28
+  dArmor: 0
+  dDamage: 2

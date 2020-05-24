@@ -6,4 +6,5 @@ public class Zone : ScriptableObject
 {
     public float _timeSpawn;
     public int _maxCar;
+    public List<int> _lvlEnemyZone;
 }

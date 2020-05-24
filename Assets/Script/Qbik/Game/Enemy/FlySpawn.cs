@@ -48,5 +48,12 @@ public class FlySpawn : MonoBehaviour
             count++;
             yield return new WaitForSeconds(0.5f);
         }
+
+        
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
     }
 }

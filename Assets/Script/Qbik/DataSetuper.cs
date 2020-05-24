@@ -13,6 +13,7 @@ public class DataSetuper : MonoBehaviour
     [SerializeField] private Zone dataZone;
     [SerializeField] private GameObject forvardTrain;
     [SerializeField] private GameObject forvardTrainLast;
+    [SerializeField] private GameObject endGame;
 
 
     private void OnEnable()
@@ -58,6 +59,6 @@ public class DataSetuper : MonoBehaviour
 
         ControlSystemData data = new ControlSystemData(zippen,playerSpawn ,playerLastSpawn, dataZone._timeSpawn);
 
-        AllData.InitData(dataPlayer, dataEnemy, State.Load, data, dataZone);
+        AllData.InitData(dataPlayer, dataEnemy, State.Load, data, dataZone, endGame);
     }
 }

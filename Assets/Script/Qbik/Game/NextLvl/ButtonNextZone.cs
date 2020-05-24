@@ -21,6 +21,8 @@ public class ButtonNextZone : MonoBehaviour
 
     public void NextZone() 
     {
+        Calculate.InitLvlRobot(AllData.DataZone._lvlEnemyZone[0]); //Сделано только для оного перехода
+
         AllData.SetStateGame(State.Load);
         AllData.SetStateLvl(LvlState.Load);
         gameObject.GetComponent<Image>().enabled = false;

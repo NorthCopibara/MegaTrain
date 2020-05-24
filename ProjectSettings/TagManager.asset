@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Player
   - SLASH
+  - FINL
   layers:
   - Default
   - TransparentFX

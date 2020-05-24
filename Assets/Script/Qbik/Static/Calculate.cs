@@ -21,13 +21,14 @@ namespace Assets.Scripts.Qbik.Static.Data
         {
             PlayerData data = new PlayerData();
             data._lvl = AllData.PlayerData._lvl + 1;
-            data._upExp = AllData.PlayerData._upExp + _dDataPlayer.dUpExp * data._lvl;
-            data._health = AllData.PlayerData._health + _dDataPlayer.dHealth * data._lvl;
-            data._armor = AllData.PlayerData._armor + _dDataPlayer.dArmor * data._lvl;
+            data._upExp = AllData.PlayerData._upExp + _dDataPlayer.dUpExp;
+            data._exp = AllData.PlayerData._exp;
+            data._health = AllData.PlayerData._health + _dDataPlayer.dHealth;
+            data._armor = AllData.PlayerData._armor; //+ _dDataPlayer.dArmor * data._lvl;
             data._damage = new List<int>();
-            data._damage.Add(AllData.PlayerData._damage[0] + _dDataPlayer.dDamage[0] * data._lvl);
-            data._damage.Add(AllData.PlayerData._damage[1] + _dDataPlayer.dDamage[1] * data._lvl);
-            data._damage.Add(AllData.PlayerData._damage[2] + _dDataPlayer.dDamage[2] * data._lvl);
+            data._damage.Add(AllData.PlayerData._damage[0] + _dDataPlayer.dDamage[0]);
+            data._damage.Add(AllData.PlayerData._damage[1] + _dDataPlayer.dDamage[1]);
+            data._damage.Add(AllData.PlayerData._damage[2] + _dDataPlayer.dDamage[2]);
             data._damageForce = AllData.PlayerData._damageForce;
             data._attackRate = AllData.PlayerData._attackRate;
             data._speed = AllData.PlayerData._speed;
@@ -41,7 +42,19 @@ namespace Assets.Scripts.Qbik.Static.Data
 
         public static void InitLvlRobot(int lvl) 
         {
-            lvlRobot = lvl;
+            lvlRobot = 1;
+            AllData.NewEnemy();
+            for (int i = 0; i < lvl; i++) 
+            {
+                UpRobot();
+            }
+            UpGolem();
+        }
+
+        public static void ClearData() 
+        {
+            lvlRobot = 1;
+            lvlGolem = 1;
         }
 
         public static void UpGolem()
@@ -80,9 +93,9 @@ namespace Assets.Scripts.Qbik.Static.Data
             EnemyData data = new EnemyData();
 
             data._lvl = lvlRobot;
-            data._exp = AllData.EnemyDataPool[0]._exp + _dDataEnemy[0].dExp * lvlRobot;
-            data._health = AllData.EnemyDataPool[0]._health + lvlRobot * _dDataEnemy[0].dHealth; 
-            data._armor = AllData.EnemyDataPool[0]._armor + _dDataEnemy[0].dArmor * lvlRobot;
+            data._exp = AllData.EnemyDataPool[0]._exp + _dDataEnemy[0].dExp;
+            data._health = AllData.EnemyDataPool[0]._health + lvlRobot * _dDataEnemy[0].dHealth;
+            data._armor = AllData.EnemyDataPool[0]._armor; //+ _dDataEnemy[0].dArmor * lvlRobot;
             data._damage = AllData.EnemyDataPool[0]._damage + lvlRobot * _dDataEnemy[0].dDamage;
             
             data._timeDeath = AllData.EnemyDataPool[0]._timeDeath;

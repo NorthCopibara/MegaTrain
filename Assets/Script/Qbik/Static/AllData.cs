@@ -91,6 +91,10 @@ namespace Assets.Scripts.Qbik.Static.Data
 {
     public static class AllData
     {
+        private static Player defoultPlayer;
+        private static List<Enemy> defoultEnemy;
+
+        private static GameObject endGame;
         private static IPlayer iPlayer;
         private static Zone dataZone;
         private static int numberSpawn;
@@ -103,7 +107,7 @@ namespace Assets.Scripts.Qbik.Static.Data
         private static ControlSystemData csData = new ControlSystemData();
 
         #region Player
-        public static void SetPlayerInterface(IPlayer player) 
+        public static void SetPlayerInterface(IPlayer player)
         {
             iPlayer = player;
         }
@@ -116,60 +120,59 @@ namespace Assets.Scripts.Qbik.Static.Data
             }
         }
 
-        private static void NewPlayer(Player player) 
+        private static void NewPlayer()
         {
             playerData = new PlayerData();
             playerData._exp = 0;
-            playerData._upExp = player._upExp;
+            playerData._upExp = defoultPlayer._upExp;
             playerData._lvl = 1;
-            playerData._health = player._health;
-            playerData._armor = player._armor;
-            playerData._damage = player._damage;
-            playerData._damageForce = player._damageForce;
-            playerData._attackRate = player._attackRate;
-            playerData._speed = player._speed;
-            playerData._extraJump = player._extraJump;
-            playerData._jumpForce = player._jumpForce;
-            playerData._attackRange = player._attackRange;
-            playerData._nextAttackTime = player._nextAttackTime;
+            playerData._health = defoultPlayer._health;
+            playerData._armor = defoultPlayer._armor;
+            playerData._damage = defoultPlayer._damage;
+            playerData._damageForce = defoultPlayer._damageForce;
+            playerData._attackRate = defoultPlayer._attackRate;
+            playerData._speed = defoultPlayer._speed;
+            playerData._extraJump = defoultPlayer._extraJump;
+            playerData._jumpForce = defoultPlayer._jumpForce;
+            playerData._attackRange = defoultPlayer._attackRange;
+            playerData._nextAttackTime = defoultPlayer._nextAttackTime;
         }
 
-        public static void SetPlayer(PlayerData data) 
+        public static void SetPlayer(PlayerData data)
         {
             playerData = data;
         }
 
-        public static void AddExp(int exp) 
+        public static void AddExp(int exp)
         {
             playerData._exp += exp;
 
-            if (playerData._exp > playerData._upExp) 
+            while (playerData._exp > playerData._upExp)
             {
                 //Надо событие инициализации игрока
                 playerData._exp -= playerData._upExp;
                 Calculate.UpPlayer();
                 iPlayer.Init();
-                AddExp(0); //Проверка на ап более одного уровня
             }
 
         }
         #endregion
 
         #region Enemy
-        public static List<GameObject> PoolActivEnemy 
+        public static List<GameObject> PoolActivEnemy
         {
-            get 
+            get
             {
                 return poolActivEnemy;
             }
         }
 
-        public static void AddEnemyActiv(GameObject enemy) 
+        public static void AddEnemyActiv(GameObject enemy)
         {
             poolActivEnemy.Add(enemy);
         }
 
-        public static void ClearEnemyActiv() 
+        public static void ClearEnemyActiv()
         {
             poolActivEnemy.Clear();
         }
@@ -182,27 +185,27 @@ namespace Assets.Scripts.Qbik.Static.Data
             }
         }
 
-        private static void NewEnemy(List<Enemy> enemy)
+        public static void NewEnemy()
         {
             enemyDataPool = new List<EnemyData>();
 
             #region Robot
             EnemyData data_1 = new EnemyData();
-            data_1._exp = enemy[0]._exp; 
+            data_1._exp = defoultEnemy[0]._exp;
             data_1._lvl = 1;
-            data_1._health = enemy[0]._health;
-            data_1._armor = enemy[0]._armor;
-            data_1._speed = enemy[0]._speed;
-            data_1._nextWaypointDistance = enemy[0]._nextWaypointDistance;
-            data_1._damage = enemy[0]._damage;
-            data_1._targetAttack = enemy[0]._targetAttack;
-            data_1._tagAttack = enemy[0]._tagAttack;
-            data_1._type = enemy[0]._type;
-            data_1._timeNextAttack = enemy[0]._timeNextAttack;
-            data_1._timeSpawn = enemy[0]._timeSpawn;
-            data_1._timeDeath = enemy[0]._timeDeath;
-            data_1._timeStopAttack = enemy[0]._timeStopAttack;
-            data_1._timeToAttack = enemy[0]._timeToAttack;
+            data_1._health = defoultEnemy[0]._health;
+            data_1._armor = defoultEnemy[0]._armor;
+            data_1._speed = defoultEnemy[0]._speed;
+            data_1._nextWaypointDistance = defoultEnemy[0]._nextWaypointDistance;
+            data_1._damage = defoultEnemy[0]._damage;
+            data_1._targetAttack = defoultEnemy[0]._targetAttack;
+            data_1._tagAttack = defoultEnemy[0]._tagAttack;
+            data_1._type = defoultEnemy[0]._type;
+            data_1._timeNextAttack = defoultEnemy[0]._timeNextAttack;
+            data_1._timeSpawn = defoultEnemy[0]._timeSpawn;
+            data_1._timeDeath = defoultEnemy[0]._timeDeath;
+            data_1._timeStopAttack = defoultEnemy[0]._timeStopAttack;
+            data_1._timeToAttack = defoultEnemy[0]._timeToAttack;
 
             enemyDataPool.Add(data_1);
             #endregion
@@ -210,40 +213,40 @@ namespace Assets.Scripts.Qbik.Static.Data
             #region Golem
             EnemyData data_2 = new EnemyData();
             data_2._lvl = 1;
-            data_2._exp = enemy[1]._exp;
-            data_2._health = enemy[1]._health;
-            data_2._armor = enemy[1]._armor;
-            data_2._speed = enemy[1]._speed;
-            data_2._nextWaypointDistance = enemy[1]._nextWaypointDistance;
-            data_2._damage = enemy[1]._damage;
-            data_2._targetAttack = enemy[1]._targetAttack;
-            data_2._tagAttack = enemy[1]._tagAttack;
-            data_2._type = enemy[1]._type;
-            data_2._timeNextAttack = enemy[1]._timeNextAttack;
-            data_2._timeSpawn = enemy[1]._timeSpawn;
-            data_2._timeDeath = enemy[1]._timeDeath;
-            data_2._timeStopAttack = enemy[1]._timeStopAttack;
-            data_2._timeToAttack = enemy[1]._timeToAttack;
+            data_2._exp = defoultEnemy[1]._exp;
+            data_2._health = defoultEnemy[1]._health;
+            data_2._armor = defoultEnemy[1]._armor;
+            data_2._speed = defoultEnemy[1]._speed;
+            data_2._nextWaypointDistance = defoultEnemy[1]._nextWaypointDistance;
+            data_2._damage = defoultEnemy[1]._damage;
+            data_2._targetAttack = defoultEnemy[1]._targetAttack;
+            data_2._tagAttack = defoultEnemy[1]._tagAttack;
+            data_2._type = defoultEnemy[1]._type;
+            data_2._timeNextAttack = defoultEnemy[1]._timeNextAttack;
+            data_2._timeSpawn = defoultEnemy[1]._timeSpawn;
+            data_2._timeDeath = defoultEnemy[1]._timeDeath;
+            data_2._timeStopAttack = defoultEnemy[1]._timeStopAttack;
+            data_2._timeToAttack = defoultEnemy[1]._timeToAttack;
             enemyDataPool.Add(data_2);
             #endregion
 
             #region SuperGolem
             EnemyData data_3 = new EnemyData();
             data_3._lvl = 1;
-            data_3._exp = enemy[2]._exp;
-            data_3._health = enemy[2]._health;
-            data_3._armor = enemy[2]._armor;
-            data_3._speed = enemy[2]._speed;
-            data_3._nextWaypointDistance = enemy[2]._nextWaypointDistance;
-            data_3._damage = enemy[2]._damage;
-            data_3._targetAttack = enemy[2]._targetAttack;
-            data_3._tagAttack = enemy[2]._tagAttack;
-            data_3._type = enemy[2]._type;
-            data_3._timeNextAttack = enemy[2]._timeNextAttack;
-            data_3._timeSpawn = enemy[2]._timeSpawn;
-            data_3._timeDeath = enemy[2]._timeDeath;
-            data_3._timeStopAttack = enemy[2]._timeStopAttack;
-            data_3._timeToAttack = enemy[2]._timeToAttack;
+            data_3._exp = defoultEnemy[2]._exp;
+            data_3._health = defoultEnemy[2]._health;
+            data_3._armor = defoultEnemy[2]._armor;
+            data_3._speed = defoultEnemy[2]._speed;
+            data_3._nextWaypointDistance = defoultEnemy[2]._nextWaypointDistance;
+            data_3._damage = defoultEnemy[2]._damage;
+            data_3._targetAttack = defoultEnemy[2]._targetAttack;
+            data_3._tagAttack = defoultEnemy[2]._tagAttack;
+            data_3._type = defoultEnemy[2]._type;
+            data_3._timeNextAttack = defoultEnemy[2]._timeNextAttack;
+            data_3._timeSpawn = defoultEnemy[2]._timeSpawn;
+            data_3._timeDeath = defoultEnemy[2]._timeDeath;
+            data_3._timeStopAttack = defoultEnemy[2]._timeStopAttack;
+            data_3._timeToAttack = defoultEnemy[2]._timeToAttack;
             enemyDataPool.Add(data_3);
             #endregion
         }
@@ -253,13 +256,18 @@ namespace Assets.Scripts.Qbik.Static.Data
             enemyDataPool[0] = data;
         }
 
-        public static void SetGolem(EnemyData data) 
+        public static void SetGolem(EnemyData data)
         {
             enemyDataPool[1] = data;
         }
         #endregion
 
         #region Game
+        public static GameObject EndGame
+        {
+            get { return endGame; }
+        }
+
         public static Zone DataZone 
         {
             get { return dataZone; }
@@ -280,12 +288,7 @@ namespace Assets.Scripts.Qbik.Static.Data
             numberCar++;
         }
 
-        public static void ClearLvl() 
-        {
-            numberCar = 0;
-            numberSpawn = 0;
-            Calculate.InitLvlRobot(1);
-        }
+        
 
         public static LvlState Lvl
         {
@@ -333,13 +336,24 @@ namespace Assets.Scripts.Qbik.Static.Data
         }
         #endregion
 
-        public static void InitData(Player player, List<Enemy> enemy, State state, ControlSystemData cs, Zone zone) 
+        public static void ClearLvl()
         {
+            numberCar = 0;
+            numberSpawn = 0;
+            //Calculate.InitLvlRobot(1);
+        }
+
+        public static void InitData(Player player, List<Enemy> enemy, State state, ControlSystemData cs, Zone zone, GameObject end)  //Точка входа в уровень
+        {
+            defoultEnemy = enemy;
+            defoultPlayer = player;
+ 
+            endGame = end;
             dataZone = zone;
-            lvl = LvlState.Sky;
+            lvl = LvlState.Load; 
             csData = cs;
-            NewPlayer(player);
-            NewEnemy(enemy);
+            NewPlayer();
+            NewEnemy();
             stateGame = state;
         }
     }

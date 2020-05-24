@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeSpawn: 20
   _maxCar: 2
+  _lvlEnemyZone: 07000000

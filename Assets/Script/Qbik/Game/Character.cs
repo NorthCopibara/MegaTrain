@@ -110,16 +110,22 @@ public class Character : MonoBehaviour, ITakeDamage
             }
             if (player)
             {
-                //Выполнить это все в каком то окне!
-                //Вызвать анимацию смерти
-                SceneManager.LoadScene("Menu");
+                GetComponent<PlayerController>().DeathPlayer();
+                AllData.SetStateGame(State.Load);
+                AllData.SetStateLvl(LvlState.Load);
                 AllData.ClearLvl();
                 ManagerPool.Dispose();
-                //Destroy(gameObject);
+                StartCoroutine(PlayerDeath());
             }
         }
         if (_healthBar != null)
             _healthBar.ApllyDamage(damage);
+    }
+
+    private IEnumerator PlayerDeath() 
+    {
+        yield return new WaitForSeconds(2f);
+        FindObjectOfType<ScenData>().iDeath();
     }
 
     private IEnumerator DehtSuperGolem()
@@ -132,7 +138,7 @@ public class Character : MonoBehaviour, ITakeDamage
         yield return new WaitForSeconds(2f);
         AllData.ClearLvl();
         ManagerPool.Dispose();
-        SceneManager.LoadScene("Menu");
+        AllData.EndGame.SetActive(true);
     }
     
     private IEnumerator DehtGolem()
@@ -156,8 +162,7 @@ public class Character : MonoBehaviour, ITakeDamage
             //Poshol nafig
         }
         #endregion
-
-        Calculate.UpGolem();
+        
         Destroy(gameObject);
     }
 
@@ -171,6 +176,7 @@ public class Character : MonoBehaviour, ITakeDamage
         yield return new WaitForSeconds(0.2f);
         ManagerPool.DeSpawn(PoolType.Robot, this.gameObject);
     }
+
 }
 
 public struct CharacterData 
