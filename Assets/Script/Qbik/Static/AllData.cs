@@ -340,6 +340,7 @@ namespace Assets.Scripts.Qbik.Static.Data
         {
             numberCar = 0;
             numberSpawn = 0;
+            ClearEnemyActiv();
             //Calculate.InitLvlRobot(1);
         }
 

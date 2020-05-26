@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enemy_golem
   m_EditorClassIdentifier: 
   _exp: 5000
-  _health: 3000
+  _health: 2000
   _armor: 1
   _speed: 90000
   _damage: 500
@@ -29,6 +29,6 @@ MonoBehaviour:
   _tagAttack: Player
   _type: 0
   dExp: 3000
-  dHealth: 3500
+  dHealth: 1
   dArmor: 0
   dDamage: 2000
