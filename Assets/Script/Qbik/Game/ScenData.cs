@@ -15,36 +15,39 @@ public struct TPData
     public GameObject Cam_3;
 }
 
-public class ScenData : MonoBehaviour
+namespace Qbik.Game.Data
 {
-    [SerializeField] private Animator animTrain;
-    [SerializeField] private GameObject light;
-    [SerializeField] private GameObject trainRoof;
-    [SerializeField] private GameObject trainCar;
-    [SerializeField] private GameObject trainCarLast;
-    [SerializeField] private GameObject backTrain;
-
-    [SerializeField] private GameObject deathConvas;
-
-    public void iDeath() 
+    public class ScenData : MonoBehaviour
     {
-        Time.timeScale = 0;
-        deathConvas.SetActive(true);
-    }
+        [SerializeField] private Animator animTrain;
+        [SerializeField] private GameObject light;
+        [SerializeField] private GameObject trainRoof;
+        [SerializeField] private GameObject trainCar;
+        [SerializeField] private GameObject trainCarLast;
+        [SerializeField] private GameObject backTrain;
 
-    public TPData ReData() 
-    {
-        TPData data = new TPData();
-        data.light = light;
-        data.animTrain = animTrain;
-        data.trainRoof = trainRoof;
-        data.trainCar = trainCar;
-        data.trainCarLast = trainCarLast;
-        data.backTrain = backTrain;
-        data.Cam_1 = null;
-        data.Cam_2 = null;
-        data.Cam_3 = null;
+        [SerializeField] private GameObject deathConvas;
 
-        return data;
+        public void iDeath()
+        {
+            Time.timeScale = 0;
+            deathConvas.SetActive(true);
+        }
+
+        public TPData ReData()
+        {
+            TPData data = new TPData();
+            data.light = light;
+            data.animTrain = animTrain;
+            data.trainRoof = trainRoof;
+            data.trainCar = trainCar;
+            data.trainCarLast = trainCarLast;
+            data.backTrain = backTrain;
+            data.Cam_1 = null;
+            data.Cam_2 = null;
+            data.Cam_3 = null;
+
+            return data;
+        }
     }
 }

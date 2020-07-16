@@ -1,96 +1,76 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Asset.Scripts.Qbik.Static.Pool;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class Loader : MonoBehaviour
+using Qbik.Static.Pool;
+
+namespace Qbik.Loader
 {
-   // private GameObject prefab;
-    ControlSystem controlSystem;
-
-    [Header ("Количество мобов в пулле на старне")]
-    [SerializeField] private int countEnemy;
-
-    [SerializeField] private GameObject buttonStart;
-
-    GameObject obj;
-    AsyncOperation async;
-    private void CreateGame()
+    public class Loader : MonoBehaviour
     {
-        //obj = Instantiate(Resources.Load<GameObject>("Models/Prefabs/ControlSystem/[CONTROLSYSTEM]") as GameObject);
-        //obj.name = "[CONTROLSYSTEM]";
-        //DontDestroyOnLoad(obj);
+        [Header("Количество мобов в пулле на старне")]
+        [SerializeField] private int countEnemy;
+        [Header("Имена префабов противников")]
+        [SerializeField] private List<string> enemyName;
 
-        //controlSystem = obj.GetComponent<ControlSystem>();
+        [Space(10)]
+        [SerializeField] private Button buttonStart;
 
-        //Надо наполнить данными AllData
-        //Надо создать пулл объектов и поместить его в контрол систем
-        //Проинициализировать спавнеры
-    }
+        [SerializeField] private string nameScen; //Пока только для 1 сцены 
 
-    /*
-     * На выходе будет пулл объектов противников не проиничиных данными
-     * Спавнеры, понимающие что им делать
-     * Данные игрока
-     * Проиниченный префаб игрока
-     * 
-     * Противники получают данные в момент спавна
-     */
+        private AsyncOperation async;
 
-    private void Start()
-    {
-        CreateGame();
-        StartCoroutine(LoadYourAsyncScene());
-    }
-
-    IEnumerator LoadYourAsyncScene()
-    {
-        yield return null;
-
-        string name = "Game_1";
-
-        #region CreatePool
-        ManagerPool.prefab = Resources.Load<GameObject>("Models/Prefabs/Character/Robot");
-
-
-        ManagerPool.AddPool(PoolType.Robot); //Создание нового пула
-        GameObject poolsGO = GameObject.Find("[POOLS]");
-
-        poolsGO.AddComponent<ScenConnector>();
-
-        ManagerPool.NewSinglSpawn(PoolType.Robot, ManagerPool.prefab); //Это вызывается перед наполнением
-        int count = 0;
-        while (count < countEnemy)
+        private void Start()
         {
-            ManagerPool.SinglSpawn(PoolType.Robot, ManagerPool.prefab);
-            count++;
-            yield return new WaitForSeconds(0.01f);
+            buttonStart.onClick.AddListener(() => { StartGame(); });
+            StartCoroutine(LoadYourAsyncScene());
         }
-        #endregion
-        DontDestroyOnLoad(poolsGO);
 
-        //Scene currentScene = SceneManager.GetActiveScene();
-        async = SceneManager.LoadSceneAsync(name, LoadSceneMode.Single);
-        async.allowSceneActivation = false;
-
-        while (async.progress < 0.9f)
+        private IEnumerator LoadYourAsyncScene()
         {
             yield return null;
+
+            #region CreatePool
+
+            ManagerPool.SetPrefab(Resources.Load<GameObject>("Models/Prefabs/Character/" + enemyName[0]));//Пока только для 1 типа противников
+
+            ManagerPool.AddPool(PoolType.Robot); //Создание нового пула
+            GameObject poolsGO = GameObject.Find("[POOLS]");
+
+            poolsGO.AddComponent<ScenConnector>();
+
+            ManagerPool.NewSinglSpawn(PoolType.Robot, ManagerPool.Prefab); //Это вызывается перед наполнением
+
+            int count = 0;
+            while (count < countEnemy)
+            {
+                ManagerPool.SinglSpawn(PoolType.Robot, ManagerPool.Prefab);
+                count++;
+                yield return new WaitForSeconds(0.01f);
+            }
+
+            DontDestroyOnLoad(poolsGO);
+            #endregion
+
+
+            async = SceneManager.LoadSceneAsync(nameScen, LoadSceneMode.Single);
+            async.allowSceneActivation = false;
+
+            while (async.progress < 0.9f)
+            {
+                yield return null;
+            }
+
+            buttonStart.gameObject.SetActive(true);
+
+            yield break;
         }
 
-        buttonStart.SetActive(true);
-        //SceneManager.MoveGameObjectToScene(poolsGO, SceneManager.GetSceneByName(name));
-        //SceneManager.MoveGameObjectToScene(obj, SceneManager.GetSceneByName(name));
-        //controlSystem.Init();
-
-        //SceneManager.UnloadSceneAsync(currentScene);
-
-        yield break;
-    }
-
-    public void GoGame() 
-    {
-        async.allowSceneActivation = true;
+        public void StartGame()
+        {
+            async.allowSceneActivation = true;
+        }
     }
 }

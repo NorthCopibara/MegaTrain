@@ -2,48 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Assets.Scripts.Qbik.Static.Data;
 
-public class ButtonNextZone : MonoBehaviour
+using Qbik.Static.Data;
+using Qbik.Static.Data.Calculate;
+
+namespace Qbik.Game.ZoneGame.StageGame
 {
-    private Transform player;
-    private Transform playerSpawn;
-    private Transform playerLastSpawn;
-    private NextZone next;
-
-    public void Init(Transform player, NextZone next) 
+    public class ButtonNextZone : MonoBehaviour
     {
-        this.player = player;
-        this.next = next;
-        playerSpawn = AllData.CSData.playerSpawn;
-        playerLastSpawn = AllData.CSData.playerLastSpawn;
-    }
+        private Transform player;
+        private Transform playerSpawn;
+        private Transform playerLastSpawn;
+        private NextZone next;
 
-    public void NextZone() 
-    {
-        Calculate.InitLvlRobot(AllData.DataZone._lvlEnemyZone[0]); //Сделано только для оного перехода
-
-        AllData.SetStateGame(State.Load);
-        AllData.SetStateLvl(LvlState.Load);
-        gameObject.GetComponent<Image>().enabled = false;
-        StartCoroutine(TP());
-    }
-
-    private IEnumerator TP() 
-    {
-        yield return new WaitForSeconds(1f);
-        if (AllData.DataZone._maxCar - 1 > AllData.NumberCar)
+        public void Init(Transform player, NextZone next)
         {
-            next.Next();
-            player.GetComponent<AnimTP>().FirstStep();
-            player.transform.position = playerSpawn.position;
+            this.player = player;
+            this.next = next;
+            playerSpawn = AllData.CSData.playerSpawn;
+            playerLastSpawn = AllData.CSData.playerLastSpawn;
         }
-        else 
+
+        public void NextZone()
         {
-            next.Next();
-            player.GetComponent<AnimTP>().LastStep();
-            player.transform.position = playerLastSpawn.position;
+            Calculate.InitLvlRobot(AllData.DataZone._lvlEnemyZone[0]); //Сделано только для оного перехода
+
+            AllData.SetStateGame(State.Load);
+            AllData.SetStateLvl(LvlState.Load);
+            gameObject.GetComponent<Image>().enabled = false;
+            StartCoroutine(TP());
         }
-        gameObject.GetComponent<Image>().enabled = true;
+
+        private IEnumerator TP()
+        {
+            yield return new WaitForSeconds(1f);
+            if (AllData.DataZone._maxCar - 1 > AllData.NumberCar)
+            {
+                next.Next();
+                player.GetComponent<AnimTP>().FirstStep();
+                player.transform.position = playerSpawn.position;
+            }
+            else
+            {
+                next.Next();
+                player.GetComponent<AnimTP>().LastStep();
+                player.transform.position = playerLastSpawn.position;
+            }
+            gameObject.GetComponent<Image>().enabled = true;
+        }
     }
 }

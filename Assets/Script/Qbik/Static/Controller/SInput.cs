@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Asset.Scripts.Qbik.Static.Controller
+namespace Qbik.Static.Controller
 {
     public static class SInput
     {

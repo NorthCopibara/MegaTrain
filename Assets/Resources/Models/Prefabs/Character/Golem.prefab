@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 376081713853290599}
   - component: {fileID: 376081713853290598}
   m_Layer: 0
-  m_Name: Hit
+  m_Name: HitParticl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4874,7 +4874,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 1.7887588, y: 3.0310616, z: 3.0310616, w: 3.0310616}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -28810,7 +28810,7 @@ GameObject:
   - component: {fileID: 507188190107960569}
   - component: {fileID: 537184521257606119}
   m_Layer: 0
-  m_Name: PlasmaExplosionEffect
+  m_Name: DeathParticl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48172,7 +48172,7 @@ GameObject:
   - component: {fileID: 698992278012567900}
   - component: {fileID: 698992278012567875}
   m_Layer: 10
-  m_Name: PlayerConvas
+  m_Name: EnemyConvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49420,7 +49420,7 @@ GameObject:
   - component: {fileID: 3074977339874410213}
   - component: {fileID: 4719551974232573298}
   m_Layer: 10
-  m_Name: Text (TMP)
+  m_Name: TextLvl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50056,8 +50056,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6518305972042636839}
   - component: {fileID: 4347810467732562037}
-  - component: {fileID: 2293663561820813997}
   - component: {fileID: 7480147176988488878}
+  - component: {fileID: 2463009148537654179}
   - component: {fileID: 570763182329316585}
   - component: {fileID: 1039743873698930097}
   m_Layer: 9
@@ -50101,27 +50101,6 @@ MonoBehaviour:
   _sprite: {fileID: 3031965018797707528}
   iGolem: 1
   _objBurByGolem: {fileID: 698992278012567873}
---- !u!114 &2293663561820813997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6048360403910779771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdfd0edd0ffbb754bac6284f6e765841, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerCam: []
-  _lvlText: {fileID: 4719551974232573298}
-  _healthBar: {fileID: 5874510833446580644}
-  _particle: {fileID: 376081713853290596}
-  _particleDeath: {fileID: 507188190107960569}
-  robot: 0
-  player: 0
-  golem: 1
-  superGolem: 0
 --- !u!114 &7480147176988488878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50150,6 +50129,22 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
+--- !u!114 &2463009148537654179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6048360403910779771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b647f8216d17dbd4ea28a3cfc881b799, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lvlText: {fileID: 4719551974232573298}
+  healthBar: {fileID: 5874510833446580644}
+  particle: {fileID: 376081713853290596}
+  particleDeath: {fileID: 507188190107960569}
 --- !u!70 &570763182329316585
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

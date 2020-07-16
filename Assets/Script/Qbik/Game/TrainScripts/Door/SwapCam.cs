@@ -2,21 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwapCam : MonoBehaviour
+namespace Qbik.Game.ZoneGame
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    public class SwapCam : MonoBehaviour
     {
-        if (collision.tag == "Player")
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            collision.GetComponent<ICam>().SwapCam(0, 1); 
+            if (collision.tag == "Player")
+            {
+                collision.GetComponent<ICam>().SwapCam(0, 1);
+            }
         }
-    }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.tag == "Player")
+        private void OnTriggerExit2D(Collider2D collision)
         {
-            collision.GetComponent<ICam>().SwapCam(1, 0);
+            if (collision.tag == "Player")
+            {
+                collision.GetComponent<ICam>().SwapCam(1, 0);
+            }
         }
     }
 }

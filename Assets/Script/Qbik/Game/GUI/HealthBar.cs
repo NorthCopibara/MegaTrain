@@ -1,20 +1,23 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+namespace Qbik.Game.GameUI.Character
 {
-    [SerializeField] Color color = Color.red;
-
-    Slider slider;
-    
-    void Start()
+    public class HealthBar : MonoBehaviour
     {
-        slider = GetComponent<Slider>();
-        slider.fillRect.GetComponent<Image>().color = color;
-    }
+        [SerializeField] Color color = Color.red;
 
-    public void ApllyDamage(int adjust)
-    {
-        slider.value -= adjust;
+        Slider slider;
+
+        void Start()
+        {
+            slider = GetComponent<Slider>();
+            slider.fillRect.GetComponent<Image>().color = color;
+        }
+
+        public void ApllyDamage(int adjust)
+        {
+            slider.value -= adjust;
+        }
     }
 }
