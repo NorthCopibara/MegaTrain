@@ -19,7 +19,7 @@ namespace Qbik.Game.Data
 
         private void OnEnable()
         {
-            if (AllData.Lvl == LvlState.Last)
+            if (Model.Game.Lvl == LvlState.Last)
                 gameObject.SetActive(false);
         }
 
@@ -39,7 +39,7 @@ namespace Qbik.Game.Data
             if (_tpDistance > 0)
             {
                 //_player.GetComponent<PlayerController>().SwapCam(1, 0);
-                AllData.SetStateGame(State.Roof);
+                Model.Game.SetStateGame(State.Roof);
                 _trainSprite.SetActive(true);
                 _train.SetActive(false);
                 _light.SetActive(true);
@@ -48,7 +48,7 @@ namespace Qbik.Game.Data
             else
             {
                 //_player.GetComponent<PlayerController>().SwapCam(0, 1);
-                AllData.SetStateGame(State.Car);
+                Model.Game.SetStateGame(State.Car);
                 _trainSprite.SetActive(false);
                 _light.SetActive(false);
                 _effects.SetActive(false);

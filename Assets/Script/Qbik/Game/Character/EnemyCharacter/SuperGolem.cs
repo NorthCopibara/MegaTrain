@@ -17,8 +17,8 @@ namespace Qbik.Game.EnemyGame
             if (charHealth <= 0)
             {
                 GetComponent<EnemyAI>().DethEnemy();
-                AllData.SetStateGame(State.Load);
-                AllData.SetStateLvl(LvlState.Load);
+                Model.Game.SetStateGame(State.Load);
+                Model.Game.SetStateLvl(LvlState.Load);
                 StartCoroutine(DehtSuperGolem());
             }
         }
@@ -31,9 +31,9 @@ namespace Qbik.Game.EnemyGame
                 particleDeath.Play();
             }
             yield return new WaitForSeconds(2f);
-            AllData.ClearLvl();
+            Model.ClearLvl();
             ManagerPool.Dispose();
-            AllData.EndGame.SetActive(true);
+            Model.Game.EndGame.SetActive(true);
         }
     }
 }

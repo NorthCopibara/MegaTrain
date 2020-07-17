@@ -36,28 +36,28 @@ namespace Qbik.Game.PlayerGame
 
         public void Init()
         {
-            _speed = AllData.PlayerData._speed;
+            _speed = Model.Player.PlayerData._speed;
 
             #region InitAttack 
-            List<int> _damage = AllData.PlayerData._damage;
-            List<int> _damageForce = AllData.PlayerData._damageForce;
-            _attackRange = AllData.PlayerData._attackRange;
-            _attackRate = AllData.PlayerData._attackRate;
-            _nextAttackTime = AllData.PlayerData._nextAttackTime;
+            List<int> _damage = Model.Player.PlayerData._damage;
+            List<int> _damageForce = Model.Player.PlayerData._damageForce;
+            _attackRange = Model.Player.PlayerData._attackRange;
+            _attackRate = Model.Player.PlayerData._attackRate;
+            _nextAttackTime = Model.Player.PlayerData._nextAttackTime;
             _attackData = new AttackData(_damage, _damageForce, LayerMask.GetMask("Enemy"), TypeAttack.Fiz, "Enemy", 0);
             #endregion
 
             CharacterData charData = new CharacterData();
-            charData.health = AllData.PlayerData._health;
-            charData.armor = AllData.PlayerData._armor;
-            charData.lvl = AllData.PlayerData._lvl;
+            charData.health = Model.Player.PlayerData._health;
+            charData.armor = Model.Player.PlayerData._armor;
+            charData.lvl = Model.Player.PlayerData._lvl;
             _charact.Initialized(charData);
         }
 
         public void Initialized()
         {
             _charact = GetComponent<Character>();
-            AllData.SetPlayerInterface(GetComponent<IPlayer>()); //Выдаем статику интерфес взаимодействия с игроком
+            Model.Player.SetPlayerInterface(GetComponent<IPlayer>()); //Выдаем статику интерфес взаимодействия с игроком
             Init();
 
             _rb = GetComponent<Rigidbody2D>();
@@ -76,7 +76,7 @@ namespace Qbik.Game.PlayerGame
 
         public void FixedUpdateController()
         {
-            if (AllData.StateGame != State.Load)
+            if (Model.Game.StateGame != State.Load)
             {
                 MoveElement();
                 Flip(_enemyGFX.transform, _rb);

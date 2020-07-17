@@ -16,7 +16,7 @@ namespace Qbik.Game.ZoneGame.LogicZone
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.tag == "Player" && AllData.StateGame != State.Load)
+            if (collision.tag == "Player" && Model.Game.StateGame != State.Load)
             {
                 _button.SetActive(true);
                 _button.GetComponent<EventData>().SetButton(collision.gameObject, _train, -3);

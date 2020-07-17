@@ -63,7 +63,7 @@ namespace Qbik.Game.Data
 
             ControlSystemData data = new ControlSystemData(zippen, playerSpawn, playerLastSpawn, dataZone._timeSpawn);
 
-            AllData.InitData(dataPlayer, dataEnemy, State.Load, data, dataZone, endGame);
+            Model.InitData(dataPlayer, dataEnemy, State.Load, data, dataZone, endGame);
         }
     }
 }

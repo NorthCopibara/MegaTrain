@@ -13,7 +13,7 @@ namespace Qbik.Game.ZoneGame.LogicZone
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (AllData.Lvl == LvlState.Last)
+            if (Model.Game.Lvl == LvlState.Last)
                 return;
 
             if (collision.tag == "Player")

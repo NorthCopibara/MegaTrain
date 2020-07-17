@@ -24,7 +24,7 @@ namespace Qbik.Game.EnemyGame
             if (charHealth <= 0)
             {
                 GetComponent<EnemyAI>().DethEnemy();
-                AllData.AddExp(exp);
+                Model.Player.AddExp(exp);
                 StartCoroutine(DehtGolem());
             }
         }

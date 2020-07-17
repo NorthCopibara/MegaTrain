@@ -49,8 +49,8 @@ namespace Qbik.Game.ZoneGame.StageGame
 
         public void LastStep()
         {
-            AllData.SetStateGame(State.Load);
-            AllData.SetStateLvl(LvlState.Last);
+            Model.Game.SetStateGame(State.Load);
+            Model.Game.SetStateLvl(LvlState.Last);
             trainCar.SetActive(false);
             trainCarLast.SetActive(true);
             StartCoroutine(lTime());
@@ -59,7 +59,7 @@ namespace Qbik.Game.ZoneGame.StageGame
         private IEnumerator lTime()
         {
             yield return new WaitForSeconds(2f);
-            AllData.SetStateGame(State.Car); //Агрим голема через и спавним его
+            Model.Game.SetStateGame(State.Car); //Агрим голема через и спавним его
             FindObjectOfType<GolemSpawn>().Spawn();
         }
 
@@ -70,8 +70,8 @@ namespace Qbik.Game.ZoneGame.StageGame
             Cam_1.SetActive(true);
             animTrain.SetTrigger("next");
             backTrain.SetActive(false);
-            AllData.SetStateGame(State.Roof);
-            AllData.SetStateLvl(LvlState.Sky);
+            Model.Game.SetStateGame(State.Roof);
+            Model.Game.SetStateLvl(LvlState.Sky);
 
             FindObjectOfType<GolemSpawn>().Spawn();
         }

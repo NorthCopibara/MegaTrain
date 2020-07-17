@@ -21,12 +21,12 @@ namespace Qbik.Game.ZoneGame.StageGame
         public void Next()
         {
             //Убиваем всех противников
-            foreach (GameObject x in AllData.PoolActivEnemy)
+            foreach (GameObject x in Model.Enemies.PoolActivEnemy)
             {
                 ManagerPool.DeSpawn(PoolType.Robot, x);
             }
-            AllData.ClearEnemyActiv();
-            AllData.UpCar();
+            Model.Enemies.ClearEnemyActiv();
+            Model.Game.UpCar();
             Destroy(this.gameObject);
         }
 

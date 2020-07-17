@@ -41,7 +41,7 @@ namespace Qbik.Game.StoryGame
             if (step == 5)
             {
                 gameObject.SetActive(false); //Точка старта игры
-                AllData.SetStateLvl(LvlState.Sky);
+                Model.Game.SetStateLvl(LvlState.Sky);
                 return;
             }
             step++;

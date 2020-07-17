@@ -45,12 +45,12 @@ namespace Qbik.Game
 
         public void Init()
         {
-            zippen = AllData.CSData.zippen;
-            timeSpawn = AllData.CSData.timeSpawn;
+            zippen = Model.Game.CSData.zippen;
+            timeSpawn = Model.Game.CSData.timeSpawn;
 
             #region Player Created
             _player = Resources.Load<GameObject>(PrefabPlayerPath) as GameObject;
-            _player = Instantiate(_player, AllData.CSData.playerSpawn.position, Quaternion.identity);
+            _player = Instantiate(_player, Model.Game.CSData.playerSpawn.position, Quaternion.identity);
             _player.name = "[PLAYER]";
 
             _player.GetComponent<PlayerController>().Initialized();
@@ -74,7 +74,7 @@ namespace Qbik.Game
                 else Debug.Log("Error! Absent cam obj");
             }
 
-            AllData.SetStateGame(State.Roof);
+            Model.Game.SetStateGame(State.Roof);
             #endregion
         }
 
@@ -90,7 +90,7 @@ namespace Qbik.Game
         {
             if (!lastCar)
             {
-                if (AllData.NumberCar == AllData.DataZone._maxCar - 1)
+                if (Model.Game.NumberCar == Model.Game.DataZone._maxCar - 1)
                 {
                     lastCar = true;
                     forvardTrain.SetActive(false);
@@ -101,7 +101,7 @@ namespace Qbik.Game
 
         private void SpawnUpdatet()
         {
-            if (AllData.Lvl == LvlState.Sky)
+            if (Model.Game.Lvl == LvlState.Sky)
             {
                 SetFlySpawn();
             }
@@ -116,7 +116,7 @@ namespace Qbik.Game
         private IEnumerator TimeSpawn()
         {
             yield return new WaitForSeconds(timeSpawn);
-            AllData.UpSpawn();
+            Model.Game.UpSpawn();
             dSpawn = false;
         }
 
@@ -124,7 +124,7 @@ namespace Qbik.Game
         {
             if (!dSpawn)
             {
-                if (AllData.NumberSpawn != 0)
+                if (Model.Game.NumberSpawn != 0)
                     Calculate.UpRobot();
 
                 zippen.SetTrigger("PlaySpawn");
@@ -147,7 +147,7 @@ namespace Qbik.Game
 
         private void OnDestroy()
         {
-            AllData.ClearLvl();
+            Model.ClearLvl();
         }
     }
 }

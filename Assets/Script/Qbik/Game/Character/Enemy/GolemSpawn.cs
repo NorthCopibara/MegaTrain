@@ -22,7 +22,7 @@ namespace Qbik.Game.EnemyGame.Spawn
             CharacterData data = new CharacterData();
             int f = 0;
 
-            if (AllData.DataZone._maxCar == AllData.NumberCar) //Разделить методы спавна для разных типов босов
+            if (Model.Game.DataZone._maxCar == Model.Game.NumberCar) //Разделить методы спавна для разных типов босов
             {
                 obj = Instantiate(Resources.Load<GameObject>("Models/Prefabs/Character/SuperGolem") as GameObject, transform.position, Quaternion.identity);
                 f = 2;
@@ -33,13 +33,13 @@ namespace Qbik.Game.EnemyGame.Spawn
                 f = 1;
             }
 
-            data.health = AllData.EnemyDataPool[f]._health;
-            data.armor = AllData.EnemyDataPool[f]._armor;
-            data.lvl = AllData.EnemyDataPool[f]._lvl;
-            data.exp = AllData.EnemyDataPool[f]._exp;
-            data.timeDeath = AllData.EnemyDataPool[f]._timeDeath;
+            data.health = Model.Enemies.EnemyDataPool[f]._health;
+            data.armor = Model.Enemies.EnemyDataPool[f]._armor;
+            data.lvl = Model.Enemies.EnemyDataPool[f]._lvl;
+            data.exp = Model.Enemies.EnemyDataPool[f]._exp;
+            data.timeDeath = Model.Enemies.EnemyDataPool[f]._timeDeath;
 
-            if (AllData.DataZone._maxCar == AllData.NumberCar)
+            if (Model.Game.DataZone._maxCar == Model.Game.NumberCar)
             {
                 SuperGolem ch = obj.GetComponentInChildren<SuperGolem>();
                 ch.Initialized(data);
@@ -52,7 +52,7 @@ namespace Qbik.Game.EnemyGame.Spawn
             }
 
             EnemyAI ai = obj.GetComponentInChildren<EnemyAI>();
-            ai.Initialized(AllData.EnemyDataPool[f], tpPoint);
+            ai.Initialized(Model.Enemies.EnemyDataPool[f], tpPoint);
             ai.OnSpawn();
         }
     }

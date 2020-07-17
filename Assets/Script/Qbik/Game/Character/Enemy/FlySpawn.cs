@@ -28,7 +28,7 @@ namespace Qbik.Game.EnemyGame.Spawn
             int count = 0;
             while (count < countEnemy)
             {
-                if (AllData.Lvl != LvlState.Sky)
+                if (Model.Game.Lvl != LvlState.Sky)
                 {
                     StopAllCoroutines();
                     break;
@@ -39,15 +39,15 @@ namespace Qbik.Game.EnemyGame.Spawn
                     float dS = Random.Range(-3, 3);
                     Vector2 pos = new Vector2(spawnPosition.position.x + dS, spawnPosition.position.y + dS);
                     GameObject obj = ManagerPool.Spawn(PoolType.Robot, ManagerPool.Prefab, pos, spawnPosition.rotation);
-                    AllData.AddEnemyActiv(obj);//Добавляем в пулл активного енеми
+                    Model.Enemies.AddEnemyActiv(obj);//Добавляем в пулл активного енеми
                     CharacterData data = new CharacterData();
-                    data.health = AllData.EnemyDataPool[0]._health;
-                    data.armor = AllData.EnemyDataPool[0]._armor;
-                    data.lvl = AllData.EnemyDataPool[0]._lvl;
-                    data.exp = AllData.EnemyDataPool[0]._exp;
-                    data.timeDeath = AllData.EnemyDataPool[0]._timeDeath;
+                    data.health = Model.Enemies.EnemyDataPool[0]._health;
+                    data.armor = Model.Enemies.EnemyDataPool[0]._armor;
+                    data.lvl = Model.Enemies.EnemyDataPool[0]._lvl;
+                    data.exp = Model.Enemies.EnemyDataPool[0]._exp;
+                    data.timeDeath = Model.Enemies.EnemyDataPool[0]._timeDeath;
                     obj.GetComponentInChildren<Character>().Initialized(data);
-                    obj.GetComponentInChildren<EnemyAI>().Initialized(AllData.EnemyDataPool[0], tpPoint);
+                    obj.GetComponentInChildren<EnemyAI>().Initialized(Model.Enemies.EnemyDataPool[0], tpPoint);
                 }
                 count++;
                 yield return new WaitForSeconds(0.5f);

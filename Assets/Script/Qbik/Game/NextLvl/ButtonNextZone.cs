@@ -19,16 +19,16 @@ namespace Qbik.Game.ZoneGame.StageGame
         {
             this.player = player;
             this.next = next;
-            playerSpawn = AllData.CSData.playerSpawn;
-            playerLastSpawn = AllData.CSData.playerLastSpawn;
+            playerSpawn = Model.Game.CSData.playerSpawn;
+            playerLastSpawn = Model.Game.CSData.playerLastSpawn;
         }
 
         public void NextZone()
         {
-            Calculate.InitLvlRobot(AllData.DataZone._lvlEnemyZone[0]); //Сделано только для оного перехода
+            Calculate.InitLvlRobot(Model.Game.DataZone._lvlEnemyZone[0]); //Сделано только для оного перехода
 
-            AllData.SetStateGame(State.Load);
-            AllData.SetStateLvl(LvlState.Load);
+            Model.Game.SetStateGame(State.Load);
+            Model.Game.SetStateLvl(LvlState.Load);
             gameObject.GetComponent<Image>().enabled = false;
             StartCoroutine(TP());
         }
@@ -36,7 +36,7 @@ namespace Qbik.Game.ZoneGame.StageGame
         private IEnumerator TP()
         {
             yield return new WaitForSeconds(1f);
-            if (AllData.DataZone._maxCar - 1 > AllData.NumberCar)
+            if (Model.Game.DataZone._maxCar - 1 > Model.Game.NumberCar)
             {
                 next.Next();
                 player.GetComponent<AnimTP>().FirstStep();

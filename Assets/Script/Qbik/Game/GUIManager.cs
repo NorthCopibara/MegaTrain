@@ -18,7 +18,7 @@ namespace Qbik.Game.GameUI
         public void ReStart()
         {
             Time.timeScale = 1;
-            AllData.ClearLvl();
+            Model.ClearLvl();
             ManagerPool.Dispose();
             SceneManager.LoadScene("Load");
         }
@@ -26,7 +26,7 @@ namespace Qbik.Game.GameUI
         public void Menu()
         {
             Time.timeScale = 1;
-            AllData.ClearLvl();
+            Model.ClearLvl();
             ManagerPool.Dispose();
             SceneManager.LoadScene("Menu");
         }

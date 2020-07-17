@@ -55,7 +55,7 @@ namespace Qbik.Game.EnemyGame
 
         public bool CheckState()
         {
-            if (myState != AllData.StateGame) //Если мое состояние отличается от состояния игры то начинаем думать что делать
+            if (myState != Model.Game.StateGame) //Если мое состояние отличается от состояния игры то начинаем думать что делать
             {
                 return true;
             }
@@ -146,7 +146,7 @@ namespace Qbik.Game.EnemyGame
             if (iDeath)
                 return;
 
-            if (iGolem && myState != AllData.StateGame)
+            if (iGolem && myState != Model.Game.StateGame)
                 return;
 
             if (_path == null)
@@ -164,7 +164,7 @@ namespace Qbik.Game.EnemyGame
                     _animDragon.animation.Play("Idle");
                 }
 
-                if (myState == AllData.StateGame)
+                if (myState == Model.Game.StateGame)
                 {
                     oneState = false;
                     if (!cdAttack)
@@ -224,12 +224,12 @@ namespace Qbik.Game.EnemyGame
 
         public void FixedUpdateController() //Апдейтаем поведение (данный метод можно убрать в детей и задавать различные состояния в родительском классе енеми) Надо сделать более функциональным
         {
-            if (myState != AllData.StateGame) //Если мое состояние отличается от состояния игры то начинаем думать что делать
+            if (myState != Model.Game.StateGame) //Если мое состояние отличается от состояния игры то начинаем думать что делать
             {
                 if (!iGolem)
                 {
                     oneSet = false;
-                    if (myState == State.Roof && AllData.StateGame == State.Car)
+                    if (myState == State.Roof && Model.Game.StateGame == State.Car)
                     {
                         if (_tphPointLeft != null && _tphPointRight != null)
                         {
@@ -245,7 +245,7 @@ namespace Qbik.Game.EnemyGame
                         }
                     }
 
-                    if (myState == State.Car && AllData.StateGame == State.Roof)
+                    if (myState == State.Car && Model.Game.StateGame == State.Roof)
                     {
                         if (_tplPointLeft != null && _tplPointRight != null)
                         {

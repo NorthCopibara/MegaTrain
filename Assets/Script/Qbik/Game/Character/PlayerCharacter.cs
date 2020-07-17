@@ -32,9 +32,9 @@ namespace Qbik.Game.PlayerGame
             if (charHealth <= 0)
             {
                 GetComponent<PlayerController>().DeathPlayer();
-                AllData.SetStateGame(State.Load);
-                AllData.SetStateLvl(LvlState.Load);
-                AllData.ClearLvl();
+                Model.Game.SetStateGame(State.Load);
+                Model.Game.SetStateLvl(LvlState.Load);
+                Model.ClearLvl();
                 ManagerPool.Dispose();
                 StartCoroutine(PlayerDeath());
             }
