@@ -85,7 +85,7 @@ namespace Qbik.Game.EnemyGame
             _tplPointLeft = tpPoint[2];
             _tplPointRight = tpPoint[3];
 
-            _playerPosition = FindObjectOfType<PlayerController>().gameObject.transform;
+            _playerPosition = FindObjectOfType<PlayerController>().gameObject.transform; //Тут плохо сделано, надо убрать
 
             moveAnimState = true; //Разрешаем бежать енеми. Добавить состояние спавна
 
