@@ -12,7 +12,6 @@ namespace Qbik.Static.Data
         private GameObject endGame;
         private Zone dataZone;
         private LvlState lvl;
-        private ControlSystemData csData;
         private State stateGame;
 
         public GameObject EndGame => endGame;
@@ -25,17 +24,14 @@ namespace Qbik.Static.Data
 
         public LvlState Lvl => lvl;
 
-        public ControlSystemData CSData => csData;
-
         public State StateGame => stateGame;
 
-        public GameModel(LvlState lvl, State stateGame, ControlSystemData csData, Zone dataZone, GameObject endGame) 
+        public GameModel(LvlState lvl, State stateGame, Zone dataZone, GameObject endGame) 
         {
             this.endGame = endGame;
             this.dataZone = dataZone;
             this.lvl = lvl;
             this.stateGame = stateGame;
-            this.csData = csData;
         }
 
         public void UpCar()

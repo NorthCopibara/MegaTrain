@@ -5,22 +5,17 @@ using UnityEngine.UI;
 
 using Qbik.Static.Data;
 using Qbik.Static.Data.Calculate;
+using JokerGho5t.MessageSystem;
 
 namespace Qbik.Game.ZoneGame.StageGame
 {
     public class ButtonNextZone : MonoBehaviour
     {
-        private Transform player;
-        private Transform playerSpawn;
-        private Transform playerLastSpawn;
         private NextZone next;
 
-        public void Init(Transform player, NextZone next)
+        public void Init(NextZone next)
         {
-            this.player = player;
             this.next = next;
-            playerSpawn = Model.Game.CSData.playerSpawn;
-            playerLastSpawn = Model.Game.CSData.playerLastSpawn;
         }
 
         public void NextZone()
@@ -39,14 +34,12 @@ namespace Qbik.Game.ZoneGame.StageGame
             if (Model.Game.DataZone._maxCar - 1 > Model.Game.NumberCar)
             {
                 next.Next();
-                player.GetComponent<AnimTP>().FirstStep();
-                player.transform.position = playerSpawn.position;
+                Message.Send("PlayerToSpawn");
             }
             else
             {
                 next.Next();
-                player.GetComponent<AnimTP>().LastStep();
-                player.transform.position = playerLastSpawn.position;
+                Message.Send("PlayerToLastSpawn");
             }
             gameObject.GetComponent<Image>().enabled = true;
         }

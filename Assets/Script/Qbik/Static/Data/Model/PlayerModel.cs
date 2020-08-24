@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JokerGho5t.MessageSystem;
 
 namespace Qbik.Static.Data
 {
@@ -18,8 +19,6 @@ namespace Qbik.Static.Data
 
             NewPlayer();
         }
-
-        
 
         public void SetPlayer(PlayerData data)
         {

@@ -112,11 +112,11 @@ namespace Qbik.Static.Data
             enemiesModel.ClearEnemyActiv();
         }
 
-        public static void InitData(Player player, List<Enemy> enemeis, State state, ControlSystemData cs, Zone zone, GameObject end)
+        public static void InitData(Player player, List<Enemy> enemeis, State state, Zone zone, GameObject end)
         {
             playerModel = new PlayerModel(player);
             enemiesModel = new EnemiesModel(enemeis);
-            gameModel = new GameModel(LvlState.Load, state, cs, zone, end);
+            gameModel = new GameModel(LvlState.Load, state, zone, end);
         }
     }
 }

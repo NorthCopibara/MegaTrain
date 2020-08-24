@@ -39,7 +39,7 @@ namespace Qbik.Game.ZoneGame.StageGame
                 if (but == null)
                 {
                     but = buttonNextLvl.GetComponent<ButtonNextZone>();
-                    but.Init(collision.transform, this);
+                    but.Init(this);
                 }
             }
         }

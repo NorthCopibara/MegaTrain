@@ -4,6 +4,7 @@ using UnityEngine;
 
 using Qbik.Static.Data;
 using Qbik.Game.EnemyGame.Spawn;
+using JokerGho5t.MessageSystem;
 
 namespace Qbik.Game.ZoneGame.StageGame
 {
@@ -60,7 +61,7 @@ namespace Qbik.Game.ZoneGame.StageGame
         {
             yield return new WaitForSeconds(2f);
             Model.Game.SetStateGame(State.Car); //Агрим голема через и спавним его
-            FindObjectOfType<GolemSpawn>().Spawn();
+            Message.Send("SpawnGolem");
         }
 
         private IEnumerator dTime()
@@ -73,7 +74,7 @@ namespace Qbik.Game.ZoneGame.StageGame
             Model.Game.SetStateGame(State.Roof);
             Model.Game.SetStateLvl(LvlState.Sky);
 
-            FindObjectOfType<GolemSpawn>().Spawn();
+            Message.Send("SpawnGolem");
         }
     }
 }

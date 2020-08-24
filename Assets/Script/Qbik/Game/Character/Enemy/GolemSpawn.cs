@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Qbik.Static.Data;
+using JokerGho5t.MessageSystem;
 
 namespace Qbik.Game.EnemyGame.Spawn
 {
@@ -11,9 +12,9 @@ namespace Qbik.Game.EnemyGame.Spawn
         [SerializeField] private List<GameObject> tpPoint;
         [SerializeField] private GameObject but;
 
-        private void Start()
+        private void OnEnable()
         {
-            Spawn();
+            Message.AddListener("SpawnGolem", Spawn);
         }
 
         public void Spawn()
@@ -54,6 +55,11 @@ namespace Qbik.Game.EnemyGame.Spawn
             EnemyAI ai = obj.GetComponentInChildren<EnemyAI>();
             ai.Initialized(Model.Enemies.EnemyDataPool[f], tpPoint);
             ai.OnSpawn();
+        }
+
+        private void OnDestroy()
+        {
+            Message.RemoveListener("SpawnGolem", Spawn);
         }
     }
 }
