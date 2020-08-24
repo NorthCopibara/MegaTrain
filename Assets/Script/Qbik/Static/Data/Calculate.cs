@@ -9,9 +9,9 @@ namespace Qbik.Static.Data.Calculate
         private static int lvlRobot = 1;
         private static int lvlGolem = 1;
         private static DefDataPlayer _dDataPlayer;
-        private static List<DefDataEnemy> _dDataEnemy;
+        private static List<DefoultDataEnemy> _dDataEnemy;
 
-        public static void IntDefData(DefDataPlayer dDataPlayer, List<DefDataEnemy> dDataEnemy)
+        public static void IntDefData(DefDataPlayer dDataPlayer, List<DefoultDataEnemy> dDataEnemy)
         {
             _dDataPlayer = dDataPlayer;
             _dDataEnemy = dDataEnemy;

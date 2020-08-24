@@ -17,6 +17,13 @@ namespace Qbik.Loader
             if (SceneManager.GetActiveScene().name == "Game_1")
             {
                 GameObject obj = GameObject.Find("[SETUP]");
+
+                if (obj == null) 
+                {
+                    Debug.Log("Not found SETUP");
+                    return;
+                }
+
                 gameObject.transform.parent = obj.transform;
                 gameObject.transform.parent = null;
                 this.enabled = false;

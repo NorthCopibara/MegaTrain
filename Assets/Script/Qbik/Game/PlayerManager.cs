@@ -8,37 +8,45 @@ using Qbik.Game.ZoneGame.StageGame;
 public class PlayerManager 
 {
     private Transform player;
-    private AnimTP animTP;
     private Transform playerSpawn;
     private Transform playerLastSpawn;
 
-    public PlayerManager(Transform player, Transform playerSpawn, Transform playerLastSpawn)
+    private GameObject deathConvas;
+
+    public PlayerManager(Transform player, Transform playerSpawn, Transform playerLastSpawn, GameObject deathConvas)
     {
         this.player = player;
         this.playerSpawn = playerSpawn;
         this.playerLastSpawn = playerLastSpawn;
-
-        animTP = player.GetComponent<AnimTP>();
+        this.deathConvas = deathConvas;
 
         Message.AddListener("PlayerToSpawn", PlayerToSpawn);
         Message.AddListener("PlayerToLastSpawn", PlayerToLastSpawn);
+        Message.AddListener("PlayerDeath", PlayerDeath);
     }
 
     public void PlayerToSpawn() 
     {
-        animTP.FirstStep();
+        Message.Send("AnimTPFirstStep");
         player.position = playerSpawn.position;
     }
 
     public void PlayerToLastSpawn()
     {
-        animTP.LastStep();
+        Message.Send("AnimTPLastStep");
         player.position = playerLastSpawn.position;
+    }
+
+    public void PlayerDeath()
+    {
+        Time.timeScale = 0;
+        deathConvas.SetActive(true);
     }
 
     public void Destroy() 
     {
         Message.RemoveListener("PlayerToSpawn", PlayerToSpawn);
         Message.RemoveListener("PlayerToLastSpawn", PlayerToLastSpawn);
+        Message.RemoveListener("PlayerDeath", PlayerDeath);
     }
 }

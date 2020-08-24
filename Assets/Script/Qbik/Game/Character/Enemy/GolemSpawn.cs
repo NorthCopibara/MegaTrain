@@ -23,6 +23,10 @@ namespace Qbik.Game.EnemyGame.Spawn
             CharacterData data = new CharacterData();
             int f = 0;
 
+            //VSE GAVNO
+            if (Model.Game == null) 
+                return;
+
             if (Model.Game.DataZone._maxCar == Model.Game.NumberCar) //Разделить методы спавна для разных типов босов
             {
                 obj = Instantiate(Resources.Load<GameObject>("Models/Prefabs/Character/SuperGolem") as GameObject, transform.position, Quaternion.identity);

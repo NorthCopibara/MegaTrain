@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+#region Structs
 public enum State
 {
     Roof,
@@ -62,7 +63,7 @@ public struct DefDataPlayer
     public List<int> dDamage;
 }
 
-public struct DefDataEnemy
+public struct DefoultDataEnemy
 {
     public int dExp;
     public int dHealth;
@@ -86,6 +87,7 @@ public struct PlayerData
     public int _extraJump;
     public float _jumpForce;
 }
+#endregion
 
 namespace Qbik.Static.Data
 {

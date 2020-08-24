@@ -24,9 +24,18 @@ namespace Qbik.Game.Data
         [SerializeField] private GameObject forvardTrainLast;
         [SerializeField] private GameObject endGame;
 
-        FlySpawnController flySpawnController;
-        MapController mapController;
-        PlayerManager playerManager;
+        [Space (5)]
+        [Header ("Конвас смерти игрока")]
+        [SerializeField] private GameObject deathConvas;
+
+        [Space(5)]
+        [Header("Объекты сцены")]
+        [SerializeField] private Animator animTrain;
+        [SerializeField] private GameObject light;
+        [SerializeField] private GameObject trainRoof;
+        [SerializeField] private GameObject trainCar;
+        [SerializeField] private GameObject trainCarLast;
+        [SerializeField] private GameObject backTrain;
 
         private readonly string PrefabPlayerPath = "Models/Prefabs/Character/Player";
 
@@ -41,7 +50,6 @@ namespace Qbik.Game.Data
 
             InitModels();
             InitPlayer();
-            InitMap();
         }
 
         private void InitModels()
@@ -53,15 +61,15 @@ namespace Qbik.Game.Data
             dPlayer.dArmor = dataPlayer.dArmor;
             dPlayer.dDamage = dataPlayer.dDamage;
 
-            List<DefDataEnemy> wey = new List<DefDataEnemy>();
+            List<DefoultDataEnemy> wey = new List<DefoultDataEnemy>();
 
-            DefDataEnemy dEnemy_1 = new DefDataEnemy(); //Для роботов //Надо добавить и для голема такой
+            DefoultDataEnemy dEnemy_1 = new DefoultDataEnemy(); //Для роботов //Надо добавить и для голема такой
             dEnemy_1.dExp = dataEnemy[0].dExp;
             dEnemy_1.dHealth = dataEnemy[0].dHealth;
             dEnemy_1.dArmor = dataEnemy[0].dArmor;
             dEnemy_1.dDamage = dataEnemy[0].dDamage;
 
-            DefDataEnemy dEnemy_2 = new DefDataEnemy(); //Для роботов //Надо добавить и для голема такой
+            DefoultDataEnemy dEnemy_2 = new DefoultDataEnemy(); //Для роботов //Надо добавить и для голема такой
             dEnemy_2.dExp = dataEnemy[1].dExp;
             dEnemy_2.dHealth = dataEnemy[1].dHealth;
             dEnemy_2.dArmor = dataEnemy[1].dArmor;
@@ -85,44 +93,51 @@ namespace Qbik.Game.Data
             _player = Instantiate(_player, playerSpawn.position, Quaternion.identity);
             _player.name = "[PLAYER]";
 
-            _player.GetComponent<PlayerController>().Initialized();
+            _player.GetComponent<PlayerController>().Initialized(); //GAVNO
 
-            PlayerCharacter ch = _player.GetComponent<PlayerCharacter>();
+            PlayerCharacter ch = _player.GetComponent<PlayerCharacter>(); //GAVNO
 
-            ScenData fuk = FindObjectOfType<ScenData>();
-            if (fuk != null)
+            List<GameObject> cam = ch.PlayerCam;
+
+            AnimTP animTP = null;
+            if (cam != null)
             {
-                List<GameObject> cam = ch.PlayerCam;
+                TPData data = new TPData();
+                data.light = light;
+                data.animTrain = animTrain;
+                data.trainRoof = trainRoof;
+                data.trainCar = trainCar;
+                data.trainCarLast = trainCarLast;
+                data.backTrain = backTrain;
+                data.Cam_1 = cam[0];
+                data.Cam_2 = cam[1];
+                data.Cam_3 = cam[2];
 
-                if (cam != null)
-                {
-                    TPData d = fuk.ReData();
-                    d.Cam_1 = cam[0];
-                    d.Cam_2 = cam[1];
-                    d.Cam_3 = cam[2];
-
-                    _player.GetComponent<AnimTP>().Init(d);
-                }
-                else Debug.Log("Error! Absent cam obj");
+                animTP = new AnimTP(data);
             }
+            else Debug.Log("Error! Absent cam obj");
 
             Model.Game.SetStateGame(State.Roof);
             #endregion
 
-            playerManager = new PlayerManager(_player.transform, playerSpawn, playerLastSpawn);
-        }
+            PlayerManager playerManager = new PlayerManager(_player.transform, playerSpawn, playerLastSpawn, deathConvas);
+            FlySpawnController flySpawnController = new FlySpawnController(zippen, dataZone._timeSpawn);
+            MapController mapController = new MapController(forvardTrain, forvardTrainLast);
 
-        private void InitMap() 
-        {
-            flySpawnController = new FlySpawnController(zippen, dataZone._timeSpawn);
-            mapController = new MapController(forvardTrain, forvardTrainLast);
-        }
-
-        private void OnDestroy()
-        {
-            flySpawnController.Destroy();
-            mapController.Destroy();
-            playerManager.Destroy();
+            ControlSystemMessage.SendEvent("InitControlSystem", playerManager, flySpawnController, mapController, animTP);
         }
     }
+}
+
+public struct TPData
+{
+    public Animator animTrain;
+    public GameObject light;
+    public GameObject trainRoof;
+    public GameObject trainCar;
+    public GameObject trainCarLast;
+    public GameObject backTrain;
+    public GameObject Cam_1;
+    public GameObject Cam_2;
+    public GameObject Cam_3;
 }

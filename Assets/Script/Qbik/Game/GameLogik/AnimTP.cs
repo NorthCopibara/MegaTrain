@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Qbik.Static.Data;
-using Qbik.Game.EnemyGame.Spawn;
 using JokerGho5t.MessageSystem;
 
 namespace Qbik.Game.ZoneGame.StageGame
 {
-    public class AnimTP : MonoBehaviour
+    public class AnimTP
     {
         private Animator animTrain;
         private GameObject light;
@@ -20,8 +19,7 @@ namespace Qbik.Game.ZoneGame.StageGame
         private GameObject Cam_2;
         private GameObject Cam_3;
 
-
-        public void Init(TPData data)
+        public AnimTP(TPData data)
         {
             light = data.light;
             animTrain = data.animTrain;
@@ -32,6 +30,9 @@ namespace Qbik.Game.ZoneGame.StageGame
             Cam_1 = data.Cam_1;
             Cam_2 = data.Cam_2;
             Cam_3 = data.Cam_3;
+
+            Message.AddListener("AnimTPFirstStep", FirstStep);
+            Message.AddListener("AnimTPLastStep", LastStep);
         }
 
         public void FirstStep()
@@ -45,7 +46,7 @@ namespace Qbik.Game.ZoneGame.StageGame
             Cam_3.SetActive(true);
             animTrain.SetTrigger("crash");
 
-            StartCoroutine(dTime());
+            CoroutinesManager.myCoroutinesManager.MyStartCoroutine(dTime());
         }
 
         public void LastStep()
@@ -54,7 +55,8 @@ namespace Qbik.Game.ZoneGame.StageGame
             Model.Game.SetStateLvl(LvlState.Last);
             trainCar.SetActive(false);
             trainCarLast.SetActive(true);
-            StartCoroutine(lTime());
+
+            CoroutinesManager.myCoroutinesManager.MyStartCoroutine(lTime());
         }
 
         private IEnumerator lTime()
@@ -75,6 +77,14 @@ namespace Qbik.Game.ZoneGame.StageGame
             Model.Game.SetStateLvl(LvlState.Sky);
 
             Message.Send("SpawnGolem");
+        }
+
+        public void Destroy() 
+        {
+            CoroutinesManager.myCoroutinesManager.MyStopAllCoroutines();
+
+            Message.RemoveListener("AnimTPFirstStep", FirstStep);
+            Message.RemoveListener("AnimTPLastStep", LastStep);
         }
     }
 }

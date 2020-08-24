@@ -5,12 +5,13 @@ using UnityEngine;
 using Qbik.Static.Data;
 using Qbik.Static.Pool;
 using Qbik.Game.Data;
+using JokerGho5t.MessageSystem;
 
 namespace Qbik.Game.PlayerGame
 {
-    public class PlayerCharacter :Character
+    public class PlayerCharacter : Character
     {
-        [SerializeField] private List<GameObject> playerCam; //player
+        [SerializeField] private List<GameObject> playerCam; 
 
         public List<GameObject> PlayerCam => playerCam;
 
@@ -31,7 +32,7 @@ namespace Qbik.Game.PlayerGame
 
             if (charHealth <= 0)
             {
-                GetComponent<PlayerController>().DeathPlayer();
+                GetComponent<PlayerController>().DeathPlayer(); //GOVNO
                 Model.Game.SetStateGame(State.Load);
                 Model.Game.SetStateLvl(LvlState.Load);
                 Model.ClearLvl();
@@ -43,7 +44,7 @@ namespace Qbik.Game.PlayerGame
         private IEnumerator PlayerDeath()
         {
             yield return new WaitForSeconds(2f);
-            FindObjectOfType<ScenData>().iDeath();
+            Message.Send("PlayerDeath");
         }
     }
 }

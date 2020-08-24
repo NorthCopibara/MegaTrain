@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class CoroutinesManager : MonoBehaviour
 {
-    //Плохая реализация. Нужна очередь!
-    //Пока сделан только для одного локального случая
-
     private static CoroutinesManager coroutinesManager;
     public static CoroutinesManager myCoroutinesManager => coroutinesManager;
 
